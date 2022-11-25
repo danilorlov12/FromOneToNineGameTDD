@@ -1,6 +1,7 @@
 package com.example.onetoninegame
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.onetoninegame.models.Model
 import com.example.onetoninegame.utils.GameUtils
 import junit.framework.Assert.assertEquals
 import org.junit.Before

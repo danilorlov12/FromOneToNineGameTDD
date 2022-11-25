@@ -1,5 +1,7 @@
 package com.example.onetoninegame.utils
 
+import com.example.onetoninegame.models.Model
+
 object GameUtils {
 
     val game = listOf(
@@ -10,5 +12,23 @@ object GameUtils {
 
     fun checkNumbers(firstValue: Int, secondValue: Int): Boolean {
         return firstValue + secondValue == 10 || firstValue == secondValue
+    }
+
+    fun canItBeCovered(models: List<Model>, start: Int, end: Int): Boolean {
+        return canItBeCoveredByRow(models, start, end) || canItBeCoveredByColumn(models, start, end)
+    }
+
+    private fun canItBeCoveredByRow(models: List<Model>, start: Int, end: Int): Boolean {
+        for (i in start + 1 until end - 1) {
+            if (!models[i].isCrossed) return false
+        }
+        return true
+    }
+
+    private fun canItBeCoveredByColumn(models: List<Model>, start: Int, end: Int): Boolean {
+        for (i in start + 9 until end - 9 step 9) {
+            if (!models[i].isCrossed) return false
+        }
+        return true
     }
 }

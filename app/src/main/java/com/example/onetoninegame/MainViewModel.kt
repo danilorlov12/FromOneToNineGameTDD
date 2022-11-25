@@ -2,6 +2,7 @@ package com.example.onetoninegame
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.onetoninegame.models.Model
 import com.example.onetoninegame.utils.GameUtils
 
 class MainViewModel : ViewModel() {
@@ -17,6 +18,7 @@ class MainViewModel : ViewModel() {
 
     fun tap(id: Int) {
         val gameModel = gameModels.value!!.first { it.id == id }
+
         if (gameModel.isCrossed) return
 
         if (gameModel.id == (selectedModel.value?.id ?: false)) {
@@ -35,6 +37,7 @@ class MainViewModel : ViewModel() {
     fun updateNumbers() {
         val lastModelId = gameModels.value!!.last().id + 1
         val restValues = gameModels.value!!.filter { !it.isCrossed }
+
         gameModels.value = gameModels.value!! + restValues.mapIndexed { index, model ->
             Model(index + lastModelId, model.num, false)
         }
@@ -42,30 +45,20 @@ class MainViewModel : ViewModel() {
 
     private fun checkNumbers(gameModel: Model) {
         if (GameUtils.checkNumbers(selectedModel.value!!.num, gameModel.num)) {
-            val start = if (selectedModel.value!!.id < gameModel.id) selectedModel.value!!.id else gameModel.id
-            val end = if (selectedModel.value!!.id > gameModel.id) selectedModel.value!!.id else gameModel.id
+            val (start, end) = if (selectedModel.value!!.id < gameModel.id) {
+                selectedModel.value!!.id to gameModel.id
+            } else {
+                gameModel.id to selectedModel.value!!.id
+            }
 
             if (start == end - 1 || start == end - 9) {
                 setValuesCrossed(start, end)
                 return
             }
-            checkRowPositions(start, end)
-            checkColumnPositions(start, end)
+            if (GameUtils.canItBeCovered(gameModels.value!!, start, end)) {
+                setValuesCrossed(start, end)
+            }
         }
-    }
-
-    private fun checkRowPositions(start: Int, end: Int) {
-        for (i in start + 1 until end - 1) {
-            if (!gameModels.value!![i].isCrossed) return
-        }
-        setValuesCrossed(start, end)
-    }
-
-    private fun checkColumnPositions(start: Int, end: Int) {
-        for (i in start + 9 until end - 9 step 9) {
-            if (!gameModels.value!![i].isCrossed) return
-        }
-        setValuesCrossed(start, end)
     }
 
     private fun setValuesCrossed(start: Int, end: Int) {
