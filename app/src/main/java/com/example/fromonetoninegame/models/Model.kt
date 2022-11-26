@@ -1,4 +1,4 @@
-package com.example.onetoninegame.models
+package com.example.fromonetoninegame.models
 
 data class Model(
     val id: Int,

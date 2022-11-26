@@ -1,9 +1,9 @@
-package com.example.onetoninegame
+package com.example.fromonetoninegame
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.onetoninegame.models.Model
-import com.example.onetoninegame.utils.GameUtils
+import com.example.fromonetoninegame.models.Model
+import com.example.fromonetoninegame.utils.GameUtils
 
 class MainViewModel : ViewModel() {
 

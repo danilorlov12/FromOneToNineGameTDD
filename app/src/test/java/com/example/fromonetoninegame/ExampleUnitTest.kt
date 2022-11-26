@@ -1,4 +1,4 @@
-package com.example.onetoninegame
+package com.example.fromonetoninegame
 
 import org.junit.Test
 

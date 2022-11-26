@@ -1,6 +1,6 @@
-package com.example.onetoninegame.utils
+package com.example.fromonetoninegame.utils
 
-import com.example.onetoninegame.models.Model
+import com.example.fromonetoninegame.models.Model
 
 object GameUtils {
 
