@@ -1,7 +1,9 @@
 package com.example.fromonetoninegame
 
+import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.fromonetoninegame.models.Model
+import com.example.fromonetoninegame.presentation.game.GameViewModel
 import com.example.fromonetoninegame.utils.GameUtils
 import junit.framework.Assert.assertEquals
 import org.junit.Before
@@ -9,7 +11,7 @@ import org.junit.Rule
 import org.junit.Test
 
 class MainViewModelUnitTest {
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: GameViewModel
     private lateinit var startModels: List<Model>
 
     @get:Rule
@@ -17,7 +19,8 @@ class MainViewModelUnitTest {
 
     @Before
     fun before() {
-        viewModel = MainViewModel()
+        viewModel = GameViewModel(Application())
+
         startModels = GameUtils.game.mapIndexed { index, s ->
             Model(index, s.toInt(), false)
         }

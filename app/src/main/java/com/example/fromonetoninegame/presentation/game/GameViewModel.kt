@@ -1,14 +1,15 @@
-package com.example.fromonetoninegame
+package com.example.fromonetoninegame.presentation.game
 
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.example.fromonetoninegame.base.BaseViewModel
 import com.example.fromonetoninegame.models.Model
 import com.example.fromonetoninegame.utils.GameUtils
 
-class MainViewModel : ViewModel() {
+class GameViewModel(app: Application) : BaseViewModel(app) {
 
-    var gameModels: MutableLiveData<List<Model>> = MutableLiveData()
-    var selectedModel: MutableLiveData<Model> = MutableLiveData()
+    val gameModels: MutableLiveData<List<Model>> = MutableLiveData()
+    val selectedModel: MutableLiveData<Model?> = MutableLiveData()
 
     fun init() {
         gameModels.value = GameUtils.game.mapIndexed { index, s ->
