@@ -428,4 +428,29 @@ class MainViewModelUnitTest {
             1 6 7               |   63 64 65
          */
     }
+
+    @Test
+    fun fourthTest() {
+        testThirdRound()
+
+        viewModel.updateNumbers()
+
+        /*
+            # # 3 4 5 6 7 # #   |   00  01  02  03  04  05  06  07  08
+            # # # # # # # 4 #   |   09  10  11  12  13  14  15  16  17
+            5 # # # 7 # # # #   |   18  19  20  21  22  23  24  25  26
+            2 # # 5 6 # # # 2   |   27  28  29  30  31  32  33  34  35
+            1 # # 4 5 1 # # #   |   36  37  38  39  40  41  42  43  44
+            # # # # # 5 6 7 4   |   45  46  47  48  49  50  51  52  53
+            5 7 2 5 6 2 1 4 5   |   54  55  56  57  58  59  60  61  62
+            1 6 7 3 4 5 6 7 4   |   63  64  65  66  67  68  69  70  71
+            5 7 2 5 6 2 1 4 5   |   72  73  74  75  76  77  78  79  80
+            1 5 6 7 4 5 7 2 5   |   81  82  83  84  85  86  87  88  89
+            6 2 1 4 5 1 6 7     |   90  91  92  93  94  95  96  97
+         */
+
+        assertEquals(98, viewModel.gameModels.value!!.size)
+        assertEquals(34, viewModel.gameModels.value!!.count { it.isCrossed })
+        assertEquals(64, viewModel.gameModels.value!!.count { !it.isCrossed })
+    }
 }
