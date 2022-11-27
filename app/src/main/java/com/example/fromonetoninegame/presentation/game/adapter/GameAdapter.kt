@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromonetoninegame.R
@@ -22,7 +23,16 @@ class GameAdapter(
     override fun onBindViewHolder(holder: GameModelViewHolder, position: Int) {
         val model = getItem(position)
         with(holder) {
-            tvNumber.text = model.num.toString()
+            tvNumber.apply {
+                text = if (!model.isCrossed) model.num.toString() else ""
+                setTextColor(
+                    ContextCompat.getColor(
+                        itemView.context, if (model.isSelected) {
+                            R.color.red
+                        } else R.color.gold
+                    )
+                )
+            }
             itemView.setOnClickListener {
                 clickListener.click(model)
             }

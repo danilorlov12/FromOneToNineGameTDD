@@ -2,7 +2,7 @@ package com.example.fromonetoninegame.presentation.game
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromonetoninegame.R
@@ -23,7 +23,7 @@ class GameFragment : BaseFragment<GameViewModel>() {
         val gameAdapter = GameAdapter(
             object : ClickListener {
                 override fun click(model: Model) {
-                    Toast.makeText(context, model.num.toString(), Toast.LENGTH_LONG).show()
+                    viewModel.tap(model.id)
                 }
             }
         )
@@ -31,15 +31,38 @@ class GameFragment : BaseFragment<GameViewModel>() {
         view.findViewById<RecyclerView>(R.id.rvGame).apply {
             layoutManager = GridLayoutManager(context, 9)
             adapter = gameAdapter
+            itemAnimator = null
+        }
+
+        view.findViewById<AppCompatButton>(R.id.btnUpdateModels).setOnClickListener {
+            viewModel.updateNumbers()
         }
 
         viewModel.init()
 
         viewModel.gameModels.observe(viewLifecycleOwner) { models ->
-            Toast.makeText(context, models.size.toString(), Toast.LENGTH_LONG).show()
             if (models.isNullOrEmpty()) return@observe
 
             gameAdapter.submitList(models)
+        }
+
+        viewModel.selectedModel.observe(viewLifecycleOwner) { model ->
+            val item = if (model != null) {
+                val item = viewModel.gameModels.value!!.first { it.id == model.id }
+                item.isSelected = true
+                item
+            } else {
+                val item = viewModel.gameModels.value!!.first { it.isSelected }
+                item.isSelected = false
+                item
+            }
+            gameAdapter.notifyItemChanged(item.id)
+        }
+
+        viewModel.pairNumbers.observe(viewLifecycleOwner) { pair ->
+            pair.toList().forEach {
+                gameAdapter.notifyItemChanged(it)
+            }
         }
     }
 }

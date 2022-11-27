@@ -10,6 +10,7 @@ class GameViewModel(app: Application) : BaseViewModel(app) {
 
     val gameModels: MutableLiveData<List<Model>> = MutableLiveData()
     val selectedModel: MutableLiveData<Model?> = MutableLiveData()
+    val pairNumbers: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
 
     fun init() {
         gameModels.value = GameUtils.game.mapIndexed { index, s ->
@@ -65,5 +66,7 @@ class GameViewModel(app: Application) : BaseViewModel(app) {
     private fun setValuesCrossed(start: Int, end: Int) {
         gameModels.value!![start].isCrossed = true
         gameModels.value!![end].isCrossed = true
+
+        pairNumbers.value = start to end
     }
 }
