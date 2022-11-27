@@ -452,5 +452,159 @@ class MainViewModelUnitTest {
         assertEquals(98, viewModel.gameModels.value!!.size)
         assertEquals(34, viewModel.gameModels.value!!.count { it.isCrossed })
         assertEquals(64, viewModel.gameModels.value!!.count { !it.isCrossed })
+
+        viewModel.tap(58)
+        assertEquals(viewModel.gameModels.value!![58], viewModel.selectedModel.value)
+
+        viewModel.tap(67)
+        assertEquals(null, viewModel.selectedModel.value)
+        assertEquals(true, viewModel.gameModels.value!![58].isCrossed)
+        assertEquals(true, viewModel.gameModels.value!![67].isCrossed)
+
+        /*
+            # # 3 4 5 6 7 # #   |   00  01  02  03  04  05  06  07  08
+            # # # # # # # 4 #   |   09  10  11  12  13  14  15  16  17
+            5 # # # 7 # # # #   |   18  19  20  21  22  23  24  25  26
+            2 # # 5 6 # # # 2   |   27  28  29  30  31  32  33  34  35
+            1 # # 4 5 1 # # #   |   36  37  38  39  40  41  42  43  44
+            # # # # # 5 6 7 4   |   45  46  47  48  49  50  51  52  53
+            5 7 2 5 # 2 1 4 5   |   54  55  56  57  58  59  60  61  62
+            1 6 7 3 # 5 6 7 4   |   63  64  65  66  67  68  69  70  71
+            5 7 2 5 6 2 1 4 5   |   72  73  74  75  76  77  78  79  80
+            1 5 6 7 4 5 7 2 5   |   81  82  83  84  85  86  87  88  89
+            6 2 1 4 5 1 6 7     |   90  91  92  93  94  95  96  97
+         */
+
+        viewModel.tap(76)
+        assertEquals(viewModel.gameModels.value!![76], viewModel.selectedModel.value)
+
+        viewModel.tap(85)
+        assertEquals(null, viewModel.selectedModel.value)
+        assertEquals(true, viewModel.gameModels.value!![76].isCrossed)
+        assertEquals(true, viewModel.gameModels.value!![85].isCrossed)
+
+        /*
+            # # 3 4 5 6 7 # #   |   00  01  02  03  04  05  06  07  08
+            # # # # # # # 4 #   |   09  10  11  12  13  14  15  16  17
+            5 # # # 7 # # # #   |   18  19  20  21  22  23  24  25  26
+            2 # # 5 6 # # # 2   |   27  28  29  30  31  32  33  34  35
+            1 # # 4 5 1 # # #   |   36  37  38  39  40  41  42  43  44
+            # # # # # 5 6 7 4   |   45  46  47  48  49  50  51  52  53
+            5 7 2 5 # 2 1 4 5   |   54  55  56  57  58  59  60  61  62
+            1 6 7 3 # 5 6 7 4   |   63  64  65  66  67  68  69  70  71
+            5 7 2 5 # 2 1 4 5   |   72  73  74  75  76  77  78  79  80
+            1 5 6 7 # 5 7 2 5   |   81  82  83  84  85  86  87  88  89
+            6 2 1 4 5 1 6 7     |   90  91  92  93  94  95  96  97
+         */
+
+        viewModel.tap(94)
+        assertEquals(viewModel.gameModels.value!![94], viewModel.selectedModel.value)
+
+        viewModel.tap(40)
+        assertEquals(null, viewModel.selectedModel.value)
+        assertEquals(true, viewModel.gameModels.value!![94].isCrossed)
+        assertEquals(true, viewModel.gameModels.value!![40].isCrossed)
+
+        /*
+            # # 3 4 5 6 7 # #   |   00  01  02  03  04  05  06  07  08
+            # # # # # # # 4 #   |   09  10  11  12  13  14  15  16  17
+            5 # # # 7 # # # #   |   18  19  20  21  22  23  24  25  26
+            2 # # 5 6 # # # 2   |   27  28  29  30  31  32  33  34  35
+            1 # # 4 # 1 # # #   |   36  37  38  39  40  41  42  43  44
+            # # # # # 5 6 7 4   |   45  46  47  48  49  50  51  52  53
+            5 7 2 5 # 2 1 4 5   |   54  55  56  57  58  59  60  61  62
+            1 6 7 3 # 5 6 7 4   |   63  64  65  66  67  68  69  70  71
+            5 7 2 5 # 2 1 4 5   |   72  73  74  75  76  77  78  79  80
+            1 5 6 7 # 5 7 2 5   |   81  82  83  84  85  86  87  88  89
+            6 2 1 4 # 1 6 7     |   90  91  92  93  94  95  96  97
+         */
+
+        viewModel.tap(80)
+        assertEquals(viewModel.gameModels.value!![80], viewModel.selectedModel.value)
+
+        viewModel.tap(89)
+        assertEquals(null, viewModel.selectedModel.value)
+        assertEquals(true, viewModel.gameModels.value!![80].isCrossed)
+        assertEquals(true, viewModel.gameModels.value!![89].isCrossed)
+
+        /*
+            # # 3 4 5 6 7 # #   |   00  01  02  03  04  05  06  07  08
+            # # # # # # # 4 #   |   09  10  11  12  13  14  15  16  17
+            5 # # # 7 # # # #   |   18  19  20  21  22  23  24  25  26
+            2 # # 5 6 # # # 2   |   27  28  29  30  31  32  33  34  35
+            1 # # 4 # 1 # # #   |   36  37  38  39  40  41  42  43  44
+            # # # # # 5 6 7 4   |   45  46  47  48  49  50  51  52  53
+            5 7 2 5 # 2 1 4 5   |   54  55  56  57  58  59  60  61  62
+            1 6 7 3 # 5 6 7 4   |   63  64  65  66  67  68  69  70  71
+            5 7 2 5 # 2 1 4 #   |   72  73  74  75  76  77  78  79  80
+            1 5 6 7 # 5 7 2 #   |   81  82  83  84  85  86  87  88  89
+            6 2 1 4 # 1 6 7     |   90  91  92  93  94  95  96  97
+         */
+
+        viewModel.tap(65)
+        assertEquals(viewModel.gameModels.value!![65], viewModel.selectedModel.value)
+
+        viewModel.tap(66)
+        assertEquals(null, viewModel.selectedModel.value)
+        assertEquals(true, viewModel.gameModels.value!![65].isCrossed)
+        assertEquals(true, viewModel.gameModels.value!![66].isCrossed)
+
+        /*
+            # # 3 4 5 6 7 # #   |   00  01  02  03  04  05  06  07  08
+            # # # # # # # 4 #   |   09  10  11  12  13  14  15  16  17
+            5 # # # 7 # # # #   |   18  19  20  21  22  23  24  25  26
+            2 # # 5 6 # # # 2   |   27  28  29  30  31  32  33  34  35
+            1 # # 4 # 1 # # #   |   36  37  38  39  40  41  42  43  44
+            # # # # # 5 6 7 4   |   45  46  47  48  49  50  51  52  53
+            5 7 2 5 # 2 1 4 5   |   54  55  56  57  58  59  60  61  62
+            1 6 # # # 5 6 7 4   |   63  64  65  66  67  68  69  70  71
+            5 7 2 5 # 2 1 4 #   |   72  73  74  75  76  77  78  79  80
+            1 5 6 7 # 5 7 2 #   |   81  82  83  84  85  86  87  88  89
+            6 2 1 4 # 1 6 7     |   90  91  92  93  94  95  96  97
+         */
+
+        viewModel.tap(56)
+        assertEquals(viewModel.gameModels.value!![56], viewModel.selectedModel.value)
+
+        viewModel.tap(74)
+        assertEquals(null, viewModel.selectedModel.value)
+        assertEquals(true, viewModel.gameModels.value!![56].isCrossed)
+        assertEquals(true, viewModel.gameModels.value!![74].isCrossed)
+
+        /*
+            # # 3 4 5 6 7 # #   |   00  01  02  03  04  05  06  07  08
+            # # # # # # # 4 #   |   09  10  11  12  13  14  15  16  17
+            5 # # # 7 # # # #   |   18  19  20  21  22  23  24  25  26
+            2 # # 5 6 # # # 2   |   27  28  29  30  31  32  33  34  35
+            1 # # 4 # 1 # # #   |   36  37  38  39  40  41  42  43  44
+            # # # # # 5 6 7 4   |   45  46  47  48  49  50  51  52  53
+            5 7 # 5 # 2 1 4 5   |   54  55  56  57  58  59  60  61  62
+            1 6 # # # 5 6 7 4   |   63  64  65  66  67  68  69  70  71
+            5 7 # 5 # 2 1 4 #   |   72  73  74  75  76  77  78  79  80
+            1 5 6 7 # 5 7 2 #   |   81  82  83  84  85  86  87  88  89
+            6 2 1 4 # 1 6 7     |   90  91  92  93  94  95  96  97
+         */
+
+        viewModel.tap(57)
+        assertEquals(viewModel.gameModels.value!![57], viewModel.selectedModel.value)
+
+        viewModel.tap(75)
+        assertEquals(null, viewModel.selectedModel.value)
+        assertEquals(true, viewModel.gameModels.value!![57].isCrossed)
+        assertEquals(true, viewModel.gameModels.value!![75].isCrossed)
+
+        /*
+            # # 3 4 5 6 7 # #   |   00  01  02  03  04  05  06  07  08
+            # # # # # # # 4 #   |   09  10  11  12  13  14  15  16  17
+            5 # # # 7 # # # #   |   18  19  20  21  22  23  24  25  26
+            2 # # 5 6 # # # 2   |   27  28  29  30  31  32  33  34  35
+            1 # # 4 # 1 # # #   |   36  37  38  39  40  41  42  43  44
+            # # # # # 5 6 7 4   |   45  46  47  48  49  50  51  52  53
+            5 7 # # # 2 1 4 5   |   54  55  56  57  58  59  60  61  62
+            1 6 # # # 5 6 7 4   |   63  64  65  66  67  68  69  70  71
+            5 7 # # # 2 1 4 #   |   72  73  74  75  76  77  78  79  80
+            1 5 6 7 # 5 7 2 #   |   81  82  83  84  85  86  87  88  89
+            6 2 1 4 # 1 6 7     |   90  91  92  93  94  95  96  97
+         */
     }
 }
