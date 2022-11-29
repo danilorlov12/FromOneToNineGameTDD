@@ -62,10 +62,55 @@ class MainViewModelUnitTest {
          */
 
         // 4 Tap
+        viewModel.tap(17)
+        assertEquals(viewModel.gameModels.value!![17], viewModel.selectedModel.value)
+
+        viewModel.tap(19)
+        assertEquals(null, viewModel.selectedModel.value)
+        assertEquals(false, viewModel.gameModels.value!![17].isCrossed)
+        assertEquals(false, viewModel.gameModels.value!![19].isCrossed)
+
+        // 5 Tap
+        viewModel.tap(8)
+        assertEquals(viewModel.gameModels.value!![8], viewModel.selectedModel.value)
+
+        viewModel.tap(11)
+        assertEquals(null, viewModel.selectedModel.value)
+        assertEquals(false, viewModel.gameModels.value!![8].isCrossed)
+        assertEquals(false, viewModel.gameModels.value!![11].isCrossed)
+
+        // 6 Tap
+        viewModel.tap(1)
+        assertEquals(viewModel.gameModels.value!![1], viewModel.selectedModel.value)
+
+        viewModel.tap(12)
+        assertEquals(null, viewModel.selectedModel.value)
+        assertEquals(false, viewModel.gameModels.value!![1].isCrossed)
+        assertEquals(false, viewModel.gameModels.value!![12].isCrossed)
+
+        // 7 Tap
+        viewModel.tap(8)
+        assertEquals(viewModel.gameModels.value!![8], viewModel.selectedModel.value)
+
+        viewModel.tap(19)
+        assertEquals(null, viewModel.selectedModel.value)
+        assertEquals(false, viewModel.gameModels.value!![8].isCrossed)
+        assertEquals(false, viewModel.gameModels.value!![19].isCrossed)
+
+        // 8 Tap
+        viewModel.tap(8)
+        assertEquals(viewModel.gameModels.value!![8], viewModel.selectedModel.value)
+
+        viewModel.tap(26)
+        assertEquals(null, viewModel.selectedModel.value)
+        assertEquals(false, viewModel.gameModels.value!![8].isCrossed)
+        assertEquals(false, viewModel.gameModels.value!![26].isCrossed)
+
+        // 9 Tap
         viewModel.tap(0)
         assertEquals(null, viewModel.selectedModel.value)
 
-        // 5 Tap
+        // 10 Tap
         viewModel.tap(8)
         assertEquals(startModels[8], viewModel.selectedModel.value)
 

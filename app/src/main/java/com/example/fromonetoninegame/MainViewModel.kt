@@ -7,8 +7,8 @@ import com.example.fromonetoninegame.utils.GameUtils
 
 class MainViewModel : ViewModel() {
 
-    var gameModels: MutableLiveData<List<Model>> = MutableLiveData()
-    var selectedModel: MutableLiveData<Model> = MutableLiveData()
+    val gameModels: MutableLiveData<List<Model>> = MutableLiveData()
+    val selectedModel: MutableLiveData<Model?> = MutableLiveData()
 
     fun init() {
         gameModels.value = GameUtils.game.mapIndexed { index, s ->
