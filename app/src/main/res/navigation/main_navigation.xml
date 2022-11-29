@@ -2,11 +2,24 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/gameFragment">
+    app:startDestination="@id/menuFragment">
+
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.fromonetoninegame.presentation.menu.MenuFragment"
+        android:label="MenuFragment">
+        <action
+            android:id="@+id/action_menuFragment_to_gameFragment"
+            app:destination="@id/gameFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.example.fromonetoninegame.presentation.game.GameFragment"
-        android:label="GameFragment" >
+        android:label="GameFragment">
+        <argument
+            android:name="isNewGame"
+            app:argType="boolean"
+            app:nullable="false" />
     </fragment>
 </navigation>
