@@ -54,16 +54,16 @@ class GameViewModel(app: Application) : BaseViewModel(app) {
             }
 
             if (start == end - 1 || start == end - 9) {
-                setValuesCrossed(start, end)
+                toCrossValues(start, end)
                 return
             }
             if (GameUtils.canItBeCovered(gameModels.value!!, start, end)) {
-                setValuesCrossed(start, end)
+                toCrossValues(start, end)
             }
         }
     }
 
-    private fun setValuesCrossed(start: Int, end: Int) {
+    private fun toCrossValues(start: Int, end: Int) {
         gameModels.value!![start].isCrossed = true
         gameModels.value!![end].isCrossed = true
 

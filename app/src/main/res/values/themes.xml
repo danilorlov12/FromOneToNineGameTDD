@@ -17,7 +17,13 @@
 
     <style name="TextViewNumber">
         <item name="android:textColor">@color/gold</item>
-        <item name="android:textSize" tools:ignore="SpUsage">24dp</item>
+        <item name="android:textSize">24dp</item>
+    </style>
+
+    <style name="TextViewDescription">
+        <item name="android:textColor">@color/gold</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:gravity">center_horizontal</item>
     </style>
 
     <style name="ButtonMenu">

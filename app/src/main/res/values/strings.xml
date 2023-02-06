@@ -1,6 +1,16 @@
 <resources>
-    <string name="app_name">From One To Nine</string>
+    <string name="app_name" translatable="false">From One To Nine</string>
 
     <string name="new_game">New game</string>
     <string name="continue_game">Continue</string>
+    <string name="how_to_play">How to play</string>
+
+    <string name="add_new_digits">Add new digits</string>
+
+    <string name="purpose_of_the_game">Purpose of the Game \u2014 remove all digits from the field game</string>
+    <string name="tap_on_pair">Tap on pair of equal digits or those which add up to ten to remove all the digits from the field.</string>
+    <string name="remove_vertically_horizontally">You can remove digits in adjacent cells both vertically or horizontally:</string>
+    <string name="remove_in_between">You can remove digits with blank cells in between:</string>
+    <string name="remove_last_first">You can remove last and first digits in adjacent rows:</string>
+    <string name="tap_add">Tap "Add" button when there are no digits to remove</string>
 </resources>

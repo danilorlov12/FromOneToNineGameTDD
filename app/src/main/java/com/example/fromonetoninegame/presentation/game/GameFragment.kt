@@ -20,20 +20,16 @@ class GameFragment : BaseFragment<GameViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val gameAdapter = GameAdapter(
-            object : ClickListener {
-                override fun click(model: Model) {
-                    viewModel.tap(model.id)
-                }
+        val gameAdapter = GameAdapter(object : ClickListener {
+            override fun click(model: Model) {
+                viewModel.tap(model.id)
             }
-        )
-
-        view.findViewById<RecyclerView>(R.id.rvGame).apply {
+        })
+        view.findViewById<RecyclerView>(R.id.rvDigits).apply {
             layoutManager = GridLayoutManager(context, 9)
             adapter = gameAdapter
             itemAnimator = null
         }
-
         view.findViewById<AppCompatButton>(R.id.btnUpdateModels).setOnClickListener {
             viewModel.updateNumbers()
         }
@@ -45,7 +41,6 @@ class GameFragment : BaseFragment<GameViewModel>() {
 
             gameAdapter.submitList(models)
         }
-
         viewModel.selectedModel.observe(viewLifecycleOwner) { model ->
             val item = if (model != null) {
                 val item = viewModel.gameModels.value!!.first { it.id == model.id }
@@ -58,7 +53,6 @@ class GameFragment : BaseFragment<GameViewModel>() {
             }
             gameAdapter.notifyItemChanged(item.id)
         }
-
         viewModel.pairNumbers.observe(viewLifecycleOwner) { pair ->
             pair.toList().forEach {
                 gameAdapter.notifyItemChanged(it)

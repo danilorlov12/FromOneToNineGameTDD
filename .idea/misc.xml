@@ -3,14 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/drawable/ic_info.xml" value="0.1695" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/drawable/rectangle_border.xml" value="0.1695" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/drawable/rectangle_filled.xml" value="0.1695" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/drawable/rectangle_rounded_filled.xml" value="0.1" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/drawable/rectangle_border.xml" value="0.176" />
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/activity_main.xml" value="0.2421875" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/fragment_game.xml" value="0.1" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/fragment_menu.xml" value="0.228125" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/item_game_model.xml" value="0.228125" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/fragment_game.xml" value="0.228125" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/fragment_info_game.xml" value="0.2421875" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/fragment_menu.xml" value="0.2421875" />
       </map>
     </option>
   </component>
