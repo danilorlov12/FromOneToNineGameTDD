@@ -1,12 +1,11 @@
 package com.example.fromonetoninegame.presentation.game
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.example.fromonetoninegame.base.BaseViewModel
 import com.example.fromonetoninegame.models.Model
 import com.example.fromonetoninegame.utils.GameUtils
 
-class GameViewModel(app: Application) : BaseViewModel(app) {
+class GameViewModel : BaseViewModel() {
 
     val gameModels: MutableLiveData<List<Model>> = MutableLiveData()
     val selectedModel: MutableLiveData<Model?> = MutableLiveData()
@@ -54,16 +53,16 @@ class GameViewModel(app: Application) : BaseViewModel(app) {
             }
 
             if (start == end - 1 || start == end - 9) {
-                toCrossValues(start, end)
+                setValuesCrossed(start, end)
                 return
             }
             if (GameUtils.canItBeCovered(gameModels.value!!, start, end)) {
-                toCrossValues(start, end)
+                setValuesCrossed(start, end)
             }
         }
     }
 
-    private fun toCrossValues(start: Int, end: Int) {
+    private fun setValuesCrossed(start: Int, end: Int) {
         gameModels.value!![start].isCrossed = true
         gameModels.value!![end].isCrossed = true
 

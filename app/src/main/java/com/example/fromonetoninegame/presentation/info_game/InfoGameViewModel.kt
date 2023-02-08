@@ -1,12 +1,11 @@
 package com.example.fromonetoninegame.presentation.info_game
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.example.fromonetoninegame.R
 import com.example.fromonetoninegame.base.BaseViewModel
 import com.example.fromonetoninegame.models.PageInfo
 
-class InfoGameViewModel(app: Application) : BaseViewModel(app) {
+class InfoGameViewModel : BaseViewModel() {
 
     val currentPage: MutableLiveData<PageInfo> = MutableLiveData()
 
