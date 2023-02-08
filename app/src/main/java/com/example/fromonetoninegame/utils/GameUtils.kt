@@ -19,15 +19,17 @@ object GameUtils {
     }
 
     private fun canItBeCoveredByRow(models: List<Model>, start: Int, end: Int): Boolean {
-        for (i in start + 1 until end - 1) {
+        for (i in start + 1 until end) {
             if (!models[i].isCrossed) return false
         }
         return true
     }
 
     private fun canItBeCoveredByColumn(models: List<Model>, start: Int, end: Int): Boolean {
-        for (i in start + 9 until end - 9 step 9) {
-            if (!models[i].isCrossed) return false
+        if ((end - start) % 9 != 0) return false
+
+        for (i in start + 9 until end step 9) {
+            if (!models[i].isCrossed && i != end) return false
         }
         return true
     }
