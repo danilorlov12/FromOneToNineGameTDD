@@ -9,6 +9,7 @@ class MainViewModel : ViewModel() {
 
     val gameModels: MutableLiveData<List<Model>> = MutableLiveData()
     val selectedModel: MutableLiveData<Model?> = MutableLiveData()
+    val pairNumbers: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
 
     fun init() {
         gameModels.value = GameUtils.game.mapIndexed { index, s ->
