@@ -34,7 +34,8 @@ class GameFragment : BaseFragment<GameViewModel>() {
             viewModel.updateNumbers()
         }
 
-        viewModel.init()
+        val isNewGame = GameFragmentArgs.fromBundle(requireArguments()).isNewGame
+        viewModel.initGame(isNewGame)
 
         viewModel.gameModels.observe(viewLifecycleOwner) { models ->
             if (models.isNullOrEmpty()) return@observe
@@ -58,5 +59,10 @@ class GameFragment : BaseFragment<GameViewModel>() {
                 gameAdapter.notifyItemChanged(it)
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.prepareGameModelToSave()
     }
 }

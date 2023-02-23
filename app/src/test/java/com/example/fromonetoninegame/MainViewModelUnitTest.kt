@@ -9,6 +9,7 @@ import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.Description
 
 class MainViewModelUnitTest {
     private lateinit var viewModel: GameViewModel
@@ -17,6 +18,9 @@ class MainViewModelUnitTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
+    @get:Rule
+    var mainCoroutineRule = MainDispatcherRule()
+
     @Before
     fun before() {
         viewModel = GameViewModel(Application())
@@ -24,7 +28,7 @@ class MainViewModelUnitTest {
         startModels = GameUtils.game.mapIndexed { index, s ->
             Model(index, s.toInt(), false)
         }
-        viewModel.init()
+        viewModel.initGame(true)
     }
 
     @Test
@@ -478,7 +482,7 @@ class MainViewModelUnitTest {
     }
 
     @Test
-    fun fourthTest() {
+    fun testFourthRound() {
         testThirdRound()
 
         viewModel.updateNumbers()

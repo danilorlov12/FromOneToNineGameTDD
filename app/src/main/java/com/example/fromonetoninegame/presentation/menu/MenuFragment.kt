@@ -18,13 +18,15 @@ class MenuFragment : BaseFragment<MenuViewModel>() {
 
         view.findViewById<AppCompatButton>(R.id.btnContinue).apply {
             setOnClickListener {
-                val action = MenuFragmentDirections.actionMenuFragmentToGameFragment(true)
+                val action = MenuFragmentDirections.actionMenuFragmentToGameFragment(false)
                 navController.navigate(action)
             }
-            visibility = if (viewModel.hasStoredGame()) View.VISIBLE else View.GONE
+            viewModel.hasStoredGame.observe(viewLifecycleOwner) {
+                visibility = if (it) View.VISIBLE else View.GONE
+            }
         }
         view.findViewById<AppCompatButton>(R.id.btnNewGame).setOnClickListener {
-            val action = MenuFragmentDirections.actionMenuFragmentToGameFragment(false)
+            val action = MenuFragmentDirections.actionMenuFragmentToGameFragment(true)
             navController.navigate(action)
         }
         view.findViewById<AppCompatImageButton>(R.id.btnInfo).setOnClickListener {
