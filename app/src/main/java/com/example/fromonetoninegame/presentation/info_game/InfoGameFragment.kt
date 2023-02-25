@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.fromonetoninegame.R
 import com.example.fromonetoninegame.base.BaseFragment
+import com.example.fromonetoninegame.presentation.info_game.adapter.InfoGameAdapter
 
 class InfoGameFragment : BaseFragment<InfoGameViewModel>() {
 
@@ -17,15 +20,26 @@ class InfoGameFragment : BaseFragment<InfoGameViewModel>() {
         super.onViewCreated(view, savedInstanceState)
 
         val tvDescription: TextView = view.findViewById(R.id.tvDescription)
-        val ivDescription: ImageView = view.findViewById(R.id.ivDescription)
         val ivNextPage: ImageView = view.findViewById(R.id.ivNext)
         val ivPreviousPage: ImageView = view.findViewById(R.id.ivPrevious)
 
+        val rvDescription: RecyclerView = view.findViewById(R.id.rvDescription)
+        val infoAdapter = InfoGameAdapter()
+        rvDescription.apply {
+            layoutManager = GridLayoutManager(context, 5)
+            adapter = infoAdapter
+            itemAnimator = null
+        }
         viewModel.initFirstPage()
 
         viewModel.currentPage.observe(viewLifecycleOwner) { pageInfo ->
             tvDescription.text = getString(pageInfo.descriptionResId)
-            ivDescription.setImageResource(pageInfo.imageResId)
+            if (pageInfo.listOfModels.isNotEmpty()) {
+                infoAdapter.submitList(pageInfo.listOfModels)
+                rvDescription.visibility = View.VISIBLE
+            } else {
+                rvDescription.visibility = View.GONE
+            }
         }
         viewModel.closeFragment.observe(viewLifecycleOwner) {
             if (it) navController.navigateUp()

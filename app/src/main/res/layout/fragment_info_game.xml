@@ -16,14 +16,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/purpose_of_the_game" />
+        tools:text="@string/remove_vertically_horizontally" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivDescription"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDescription"
         android:layout_width="320dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="184dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp"
         android:background="@drawable/rectangle_border"
+        android:overScrollMode="never"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,11 +34,11 @@
         android:id="@+id/ivPrevious"
         android:layout_width="100dp"
         android:layout_height="64dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="184dp"
         android:background="@drawable/rectangle_border"
-        app:layout_constraintStart_toStartOf="@+id/ivDescription"
-        app:layout_constraintTop_toBottomOf="@+id/ivDescription"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_arrow_back"
         app:tint="@color/gold" />
 
@@ -44,11 +46,11 @@
         android:id="@+id/ivNext"
         android:layout_width="100dp"
         android:layout_height="64dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="184dp"
         android:background="@drawable/rectangle_border"
-        app:layout_constraintEnd_toEndOf="@+id/ivDescription"
-        app:layout_constraintTop_toBottomOf="@id/ivDescription"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_arrow_right"
         app:tint="@color/gold" />
 

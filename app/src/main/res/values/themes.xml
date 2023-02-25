@@ -11,6 +11,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:navigationBarColor">@color/primary</item>
 
         <item name="android:background">@color/primary</item>
     </style>
@@ -18,6 +19,11 @@
     <style name="TextViewNumber">
         <item name="android:textColor">@color/gold</item>
         <item name="android:textSize">24dp</item>
+    </style>
+
+    <style name="TextViewNumberInInfo">
+        <item name="android:textColor">@color/gold</item>
+        <item name="android:textSize">38dp</item>
     </style>
 
     <style name="TextViewDescription">
