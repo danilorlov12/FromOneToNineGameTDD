@@ -26,12 +26,18 @@ class MenuFragment : BaseFragment<MenuViewModel>() {
             }
         }
         view.findViewById<AppCompatButton>(R.id.btnNewGame).setOnClickListener {
-            val action = MenuFragmentDirections.actionMenuFragmentToGameFragment(true)
-            navController.navigate(action)
+            viewModel.deleteStoredGame()
         }
         view.findViewById<AppCompatImageButton>(R.id.btnInfo).setOnClickListener {
             val action = MenuFragmentDirections.actionMenuFragmentToInfoFragment()
             navController.navigate(action)
+        }
+        viewModel.isGameDeleted.observe(viewLifecycleOwner) { isGameDeleted ->
+            if (isGameDeleted) {
+                val action = MenuFragmentDirections.actionMenuFragmentToGameFragment(true)
+                navController.navigate(action)
+                viewModel.isGameDeleted.value = false
+            }
         }
     }
 }

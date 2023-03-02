@@ -13,4 +13,7 @@ interface GameDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(gameModel: GameDbModel)
+
+    @Query("DELETE FROM unfinished_game")
+    suspend fun deleteUnfinishedGame()
 }

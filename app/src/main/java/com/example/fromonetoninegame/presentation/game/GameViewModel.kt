@@ -1,7 +1,6 @@
 package com.example.fromonetoninegame.presentation.game
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.fromonetoninegame.base.BaseViewModel
@@ -19,6 +18,9 @@ class GameViewModel(application: Application) : BaseViewModel(application) {
     val selectedModel: MutableLiveData<Model?> = MutableLiveData()
     val pairNumbers: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
 
+    val startTime: MutableLiveData<Long> = MutableLiveData()
+    val gameTime: MutableLiveData<Long> = MutableLiveData()
+
     fun initGame(isNewGame: Boolean) {
         viewModelScope.launch {
             gameModels.value = if (isNewGame) {
@@ -29,6 +31,13 @@ class GameViewModel(application: Application) : BaseViewModel(application) {
                 val storedGame = repository.getLastGameFromDatabase()
                 convertToDisplayableGame(storedGame!!)
             }
+        }
+    }
+
+    fun initGameTime() {
+        viewModelScope.launch {
+            val storedGame = repository.getLastGameFromDatabase()
+            startTime.value = storedGame?.time ?: 0L
         }
     }
 
@@ -102,10 +111,9 @@ class GameViewModel(application: Application) : BaseViewModel(application) {
                 gameDigits = gameModels.value?.joinToString("") {
                     if (it.isCrossed) "0" else it.num.toString()
                 } ?: "",
-                time = "time",
+                time = gameTime.value ?: 0L,
                 pairCrossed = "pairCrossed"
             )
-            Log.e("", "$gameDbModel")
             repository.saveGameToDatabase(gameDbModel)
         }
     }

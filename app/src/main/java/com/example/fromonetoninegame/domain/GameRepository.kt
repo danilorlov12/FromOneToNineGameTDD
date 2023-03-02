@@ -9,4 +9,6 @@ interface GameRepository {
     suspend fun isGameSavedInDatabase(): Boolean
 
     suspend fun getLastGameFromDatabase(): GameDbModel?
+
+    suspend fun deleteLastGameFromDatabase()
 }

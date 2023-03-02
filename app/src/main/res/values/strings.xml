@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">From One To Nine</string>
+    <string name="app_name" translatable="false">FromOneToNine</string>
 
     <string name="new_game">New game</string>
     <string name="continue_game">Continue</string>
@@ -12,4 +12,6 @@
     <string name="remove_vertically_horizontally">You can remove digits in adjacent cells both vertically or horizontally:</string>
     <string name="remove_in_between">You can remove digits with blank cells in between:</string>
     <string name="remove_last_first">You can remove last and first digits in adjacent rows:</string>
+
+    <string name="time" translatable="false">%02d:%02d:%02d</string>
 </resources>

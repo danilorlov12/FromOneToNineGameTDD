@@ -1,7 +1,6 @@
 package com.example.fromonetoninegame.data.repository
 
 import android.app.Application
-import android.util.Log
 import com.example.fromonetoninegame.data.AppDatabase
 import com.example.fromonetoninegame.data.GameDbModel
 import com.example.fromonetoninegame.domain.GameRepository
@@ -21,8 +20,10 @@ class GameRepositoryImpl(
     }
 
     override suspend fun getLastGameFromDatabase(): GameDbModel? {
-        val game = gameDao.findUnfinishedGame()
-        Log.e("game = %s", game.toString())
         return gameDao.findUnfinishedGame()
+    }
+
+    override suspend fun deleteLastGameFromDatabase() {
+        gameDao.deleteUnfinishedGame()
     }
 }

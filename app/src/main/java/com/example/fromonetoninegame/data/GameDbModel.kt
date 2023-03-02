@@ -8,6 +8,6 @@ data class GameDbModel(
     @PrimaryKey
     val id: Int,
     val gameDigits: String,
-    val time: String,
+    val time: Long,
     val pairCrossed: String,
 )
