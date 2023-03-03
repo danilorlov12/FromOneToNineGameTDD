@@ -8,11 +8,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromonetoninegame.R
-import com.example.fromonetoninegame.models.Model
+import com.example.fromonetoninegame.presentation.game.GameModel
 
 class GameAdapter(
     private val clickListener: ClickListener,
-) : ListAdapter<Model, GameAdapter.GameModelViewHolder>(GameDiffCallback) {
+) : ListAdapter<GameModel, GameAdapter.GameModelViewHolder>(GameDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameModelViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -45,5 +45,5 @@ class GameAdapter(
 }
 
 interface ClickListener {
-    fun click(model: Model)
+    fun click(model: GameModel)
 }

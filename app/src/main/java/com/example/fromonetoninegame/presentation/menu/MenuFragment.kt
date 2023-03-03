@@ -16,6 +16,8 @@ class MenuFragment : BaseFragment<MenuViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.checkStoredGame()
+
         view.findViewById<AppCompatButton>(R.id.btnContinue).apply {
             setOnClickListener {
                 val action = MenuFragmentDirections.actionMenuFragmentToGameFragment(false)

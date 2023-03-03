@@ -2,18 +2,17 @@ package com.example.fromonetoninegame
 
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.fromonetoninegame.models.Model
+import com.example.fromonetoninegame.presentation.game.GameModel
 import com.example.fromonetoninegame.presentation.game.GameViewModel
 import com.example.fromonetoninegame.utils.GameUtils
 import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.Description
 
 class MainViewModelUnitTest {
     private lateinit var viewModel: GameViewModel
-    private lateinit var startModels: List<Model>
+    private lateinit var startModels: List<GameModel>
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -26,7 +25,7 @@ class MainViewModelUnitTest {
         viewModel = GameViewModel(Application())
 
         startModels = GameUtils.game.mapIndexed { index, s ->
-            Model(index, s.toInt(), false)
+            GameModel(index, s.toInt(), false)
         }
         viewModel.initGame(true)
     }

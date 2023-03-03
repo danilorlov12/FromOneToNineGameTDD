@@ -9,10 +9,10 @@ import androidx.room.Query
 interface GameDao {
 
     @Query("SELECT * FROM unfinished_game")
-    suspend fun findUnfinishedGame(): GameDbModel?
+    suspend fun findUnfinishedGame(): GameModelDB?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(gameModel: GameDbModel)
+    suspend fun insert(gameModel: GameModelDB)
 
     @Query("DELETE FROM unfinished_game")
     suspend fun deleteUnfinishedGame()

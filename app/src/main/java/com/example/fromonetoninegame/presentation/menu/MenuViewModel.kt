@@ -14,11 +14,7 @@ class MenuViewModel(application: Application) : BaseViewModel(application) {
     val hasStoredGame: MutableLiveData<Boolean> = MutableLiveData()
     val isGameDeleted: MutableLiveData<Boolean> = MutableLiveData()
 
-    init {
-        checkStoredGame()
-    }
-
-    private fun checkStoredGame() {
+    fun checkStoredGame() {
         viewModelScope.launch {
             hasStoredGame.value = repository.isGameSavedInDatabase()
         }

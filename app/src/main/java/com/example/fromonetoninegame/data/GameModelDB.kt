@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "unfinished_game")
-data class GameDbModel(
+data class GameModelDB(
     @PrimaryKey
     val id: Int,
     val gameDigits: String,

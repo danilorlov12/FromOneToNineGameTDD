@@ -1,6 +1,6 @@
 package com.example.fromonetoninegame.utils
 
-import com.example.fromonetoninegame.models.Model
+import com.example.fromonetoninegame.presentation.game.GameModel
 
 object GameUtils {
 
@@ -14,18 +14,18 @@ object GameUtils {
         return firstValue + secondValue == 10 || firstValue == secondValue
     }
 
-    fun canItBeCovered(models: List<Model>, start: Int, end: Int): Boolean {
+    fun canItBeCovered(models: List<GameModel>, start: Int, end: Int): Boolean {
         return canItBeCoveredByRow(models, start, end) || canItBeCoveredByColumn(models, start, end)
     }
 
-    private fun canItBeCoveredByRow(models: List<Model>, start: Int, end: Int): Boolean {
+    private fun canItBeCoveredByRow(models: List<GameModel>, start: Int, end: Int): Boolean {
         for (i in start + 1 until end) {
             if (!models[i].isCrossed) return false
         }
         return true
     }
 
-    private fun canItBeCoveredByColumn(models: List<Model>, start: Int, end: Int): Boolean {
+    private fun canItBeCoveredByColumn(models: List<GameModel>, start: Int, end: Int): Boolean {
         if ((end - start) % 9 != 0) return false
 
         for (i in start + 9 until end step 9) {

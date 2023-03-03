@@ -8,10 +8,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromonetoninegame.R
-import com.example.fromonetoninegame.models.Model
+import com.example.fromonetoninegame.presentation.game.GameModel
 import com.example.fromonetoninegame.presentation.game.adapter.GameDiffCallback
 
-class InfoGameAdapter : ListAdapter<Model, InfoGameAdapter.GameModelViewHolder>(GameDiffCallback) {
+class InfoGameAdapter : ListAdapter<GameModel, InfoGameAdapter.GameModelViewHolder>(GameDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameModelViewHolder {
         val view = LayoutInflater.from(parent.context)

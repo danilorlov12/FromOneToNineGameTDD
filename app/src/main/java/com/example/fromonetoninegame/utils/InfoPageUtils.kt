@@ -1,8 +1,8 @@
 package com.example.fromonetoninegame.utils
 
 import com.example.fromonetoninegame.R
-import com.example.fromonetoninegame.models.Model
-import com.example.fromonetoninegame.models.PageInfo
+import com.example.fromonetoninegame.presentation.game.GameModel
+import com.example.fromonetoninegame.presentation.info_game.PageInfo
 
 object InfoPageUtils {
 
@@ -64,9 +64,9 @@ object InfoPageUtils {
     }
 
 
-    private fun convertToModelList(list: List<String>): List<Model> {
+    private fun convertToModelList(list: List<String>): List<GameModel> {
         return list.mapIndexed { index, num ->
-            Model(index, num.toInt(), num == "0")
+            GameModel(index, num.toInt(), num == "0")
         }
     }
 }

@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="primary">#FF202020</color>
+    <color name="grey">#FF3C3C3C</color>
 
     <color name="gold">#FFB300</color>
     <color name="yellow">#FFFF00</color>

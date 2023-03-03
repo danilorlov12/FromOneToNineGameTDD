@@ -33,7 +33,7 @@
     </style>
 
     <style name="ButtonMenu">
-        <item name="android:background">@drawable/rectangle_rounded_filled</item>
+        <item name="android:background">@drawable/rectangle_rounded_filled_gold</item>
         <item name="android:letterSpacing">0.15</item>
         <item name="android:textColor">@color/primary</item>
         <item name="android:textSize">18dp</item>

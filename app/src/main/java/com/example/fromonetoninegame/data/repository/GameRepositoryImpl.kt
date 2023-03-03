@@ -2,7 +2,7 @@ package com.example.fromonetoninegame.data.repository
 
 import android.app.Application
 import com.example.fromonetoninegame.data.AppDatabase
-import com.example.fromonetoninegame.data.GameDbModel
+import com.example.fromonetoninegame.data.GameModelDB
 import com.example.fromonetoninegame.domain.GameRepository
 
 class GameRepositoryImpl(
@@ -11,7 +11,7 @@ class GameRepositoryImpl(
 
     private val gameDao = AppDatabase.getInstance(application).gameDao()
 
-    override suspend fun saveGameToDatabase(gameDbModel: GameDbModel) {
+    override suspend fun saveGameToDatabase(gameDbModel: GameModelDB) {
         gameDao.insert(gameDbModel)
     }
 
@@ -19,7 +19,7 @@ class GameRepositoryImpl(
         return gameDao.findUnfinishedGame() != null
     }
 
-    override suspend fun getLastGameFromDatabase(): GameDbModel? {
+    override suspend fun getLastGameFromDatabase(): GameModelDB? {
         return gameDao.findUnfinishedGame()
     }
 

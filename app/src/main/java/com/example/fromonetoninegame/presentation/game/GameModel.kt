@@ -1,6 +1,6 @@
-package com.example.fromonetoninegame.models
+package com.example.fromonetoninegame.presentation.game
 
-data class Model(
+data class GameModel(
     val id: Int,
     var num: Int,
     var isCrossed: Boolean,

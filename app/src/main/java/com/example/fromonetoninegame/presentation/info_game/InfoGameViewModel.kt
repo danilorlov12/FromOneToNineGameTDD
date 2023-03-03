@@ -3,7 +3,6 @@ package com.example.fromonetoninegame.presentation.info_game
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.example.fromonetoninegame.base.BaseViewModel
-import com.example.fromonetoninegame.models.PageInfo
 import com.example.fromonetoninegame.utils.InfoPageUtils
 
 class InfoGameViewModel(application: Application) : BaseViewModel(application) {

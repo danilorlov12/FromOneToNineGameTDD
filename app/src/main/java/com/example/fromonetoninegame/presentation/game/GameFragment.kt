@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromonetoninegame.R
 import com.example.fromonetoninegame.base.BaseFragment
-import com.example.fromonetoninegame.models.Model
 import com.example.fromonetoninegame.presentation.game.adapter.ClickListener
 import com.example.fromonetoninegame.presentation.game.adapter.GameAdapter
 import com.example.fromonetoninegame.utils.CountUpTimer
@@ -30,7 +29,7 @@ class GameFragment : BaseFragment<GameViewModel>() {
         val tvGameTime = view.findViewById<TextView>(R.id.tvGameTime)
 
         val gameAdapter = GameAdapter(object : ClickListener {
-            override fun click(model: Model) {
+            override fun click(model: GameModel) {
                 viewModel.tap(model.id)
             }
         })
@@ -52,6 +51,9 @@ class GameFragment : BaseFragment<GameViewModel>() {
             if (models.isNullOrEmpty()) return@observe
 
             gameAdapter.submitList(models)
+        }
+        viewModel.gameModelsCount.observe(viewLifecycleOwner) { count ->
+            btnUpdateModels.isEnabled = count < 1000
         }
         viewModel.selectedModel.observe(viewLifecycleOwner) { model ->
             val item = if (model != null) {
