@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.example.fromonetoninegame.presentation.menu.MenuFragment"
+        android:name="com.orlovdanylo.fromonetoninegame.presentation.menu.MenuFragment"
         android:label="MenuFragment">
         <action
             android:id="@+id/action_menuFragment_to_gameFragment"
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/gameFragment"
-        android:name="com.example.fromonetoninegame.presentation.game.GameFragment"
+        android:name="com.orlovdanylo.fromonetoninegame.presentation.game.GameFragment"
         android:label="GameFragment">
         <argument
             android:name="isNewGame"
@@ -28,6 +28,6 @@
 
     <fragment
         android:id="@+id/infoFragment"
-        android:name="com.example.fromonetoninegame.presentation.info_game.InfoGameFragment"
+        android:name="com.orlovdanylo.fromonetoninegame.presentation.info_game.InfoGameFragment"
         android:label="InfoFragment" />
 </navigation>
