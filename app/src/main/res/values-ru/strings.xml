@@ -11,4 +11,8 @@
     <string name="remove_vertically_horizontally">Цифры можно убрать, если они стоят в соседних по вертикали или горизонтали клетках</string>
     <string name="remove_in_between">Также цифры можно убрать, если между ними находятся пустые клетки</string>
     <string name="remove_last_first">То есть, можно вычеркнуть последнюю цифру одной строки и первую цифру следующей строки</string>
+
+    <string name="congratulations_you_won">Поздравляем, ты победил!</string>
+    <string name="okay">Okay</string>
+
 </resources>

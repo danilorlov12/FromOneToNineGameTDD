@@ -20,6 +20,8 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/drawable/rectangle_rounded_filled_gold.xml" value="0.1615" />
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/drawable/rectangle_rounded_filled_grey.xml" value="0.1615" />
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/activity_main.xml" value="0.2421875" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/dialog_finish_game.xml" value="0.2421875" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/dialog_finished_game.xml" value="0.2421875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/fragment_game.xml" value="0.228125" />
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/fragment_info_game.xml" value="0.2421875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/fragment_menu.xml" value="0.2421875" />

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromonetoninegame.R
 import com.example.fromonetoninegame.base.BaseFragment
+import com.example.fromonetoninegame.presentation.alert_dialog.CustomAlertDialog
 import com.example.fromonetoninegame.presentation.game.adapter.ClickListener
 import com.example.fromonetoninegame.presentation.game.adapter.GameAdapter
 import com.example.fromonetoninegame.utils.CountUpTimer
@@ -70,6 +71,16 @@ class GameFragment : BaseFragment<GameViewModel>() {
         viewModel.pairNumbers.observe(viewLifecycleOwner) { pair ->
             pair.toList().forEach {
                 gameAdapter.notifyItemChanged(it)
+            }
+        }
+        viewModel.isGameFinished.observe(viewLifecycleOwner) { isGameFinished ->
+            if (isGameFinished) {
+                CustomAlertDialog(
+                    context = requireContext(),
+                    title = getString(R.string.congratulations_you_won),
+                    positiveButtonText = getString(R.string.okay)
+                ) { navController.navigateUp() }
+                    .create()
             }
         }
     }

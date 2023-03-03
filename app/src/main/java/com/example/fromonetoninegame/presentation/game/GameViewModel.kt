@@ -17,6 +17,7 @@ class GameViewModel(application: Application) : BaseViewModel(application) {
     val gameModelsCount: MutableLiveData<Int> = MutableLiveData()
     val selectedModel: MutableLiveData<GameModel?> = MutableLiveData()
     val pairNumbers: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
+    val isGameFinished: MutableLiveData<Boolean> = MutableLiveData()
 
     val startTime: MutableLiveData<Long> = MutableLiveData()
     val gameTime: MutableLiveData<Long> = MutableLiveData()
@@ -95,6 +96,10 @@ class GameViewModel(application: Application) : BaseViewModel(application) {
         pairNumbers.value = start to end
 
         gameModelsCount.value = gameModels.value!!.count { !it.isCrossed }
+
+        if (gameModelsCount.value == 0) {
+            isGameFinished.value = true
+        }
     }
 
     private fun convertToDisplayableGame(gameDbModel: GameModelDB): List<GameModel> {
