@@ -32,6 +32,7 @@
             style="@style/ButtonMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
             android:text="@string/continue_game" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -65,6 +66,6 @@
         android:textColor="@color/gold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="1.0.0" />
+        tools:text="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

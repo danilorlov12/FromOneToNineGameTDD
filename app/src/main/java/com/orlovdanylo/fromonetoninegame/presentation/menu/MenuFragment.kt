@@ -2,6 +2,7 @@ package com.orlovdanylo.fromonetoninegame.presentation.menu
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageButton
 import com.orlovdanylo.fromonetoninegame.R
@@ -24,7 +25,7 @@ class MenuFragment : BaseFragment<MenuViewModel>() {
                 navController.navigate(action)
             }
             viewModel.hasStoredGame.observe(viewLifecycleOwner) {
-                visibility = if (it) View.VISIBLE else View.GONE
+                isEnabled = it
             }
         }
         view.findViewById<AppCompatButton>(R.id.btnNewGame).setOnClickListener {
@@ -41,5 +42,9 @@ class MenuFragment : BaseFragment<MenuViewModel>() {
                 viewModel.isGameDeleted.value = false
             }
         }
+        view.findViewById<TextView>(R.id.tvVersion).text =
+            requireActivity().application.packageManager.getPackageInfo(
+                requireActivity().application.packageName, 0
+            ).versionName
     }
 }

@@ -11,7 +11,7 @@ class MenuViewModel(application: Application) : BaseViewModel(application) {
 
     private val repository = GameRepositoryImpl(application)
 
-    val hasStoredGame: MutableLiveData<Boolean> = MutableLiveData()
+    val hasStoredGame: MutableLiveData<Boolean> = MutableLiveData(false)
     val isGameDeleted: MutableLiveData<Boolean> = MutableLiveData()
 
     fun checkStoredGame() {
