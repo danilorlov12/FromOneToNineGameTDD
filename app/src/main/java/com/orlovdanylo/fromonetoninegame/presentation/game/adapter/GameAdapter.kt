@@ -23,16 +23,21 @@ class GameAdapter(
     override fun onBindViewHolder(holder: GameModelViewHolder, position: Int) {
         val model = getItem(position)
         with(holder) {
-            tvNumber.apply {
-                text = if (!model.isCrossed) model.num.toString() else ""
-                setTextColor(
-                    ContextCompat.getColor(
-                        itemView.context, if (model.isSelected) {
-                            R.color.red
-                        } else R.color.gold
-                    )
+            tvNumber.background = ContextCompat.getDrawable(
+                itemView.context, if (model.isSelected)
+                    R.drawable.rectangel_border_filled
+                else
+                    R.drawable.rectangle_border
+            )
+            tvNumber.text = if (!model.isCrossed) model.num.toString() else ""
+            tvNumber.setTextColor(
+                ContextCompat.getColor(
+                    itemView.context, if (model.isSelected)
+                        R.color.black
+                    else
+                        R.color.gold
                 )
-            }
+            )
             itemView.setOnClickListener {
                 clickListener.click(model)
             }
