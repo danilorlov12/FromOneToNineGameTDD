@@ -6,19 +6,23 @@ import androidx.lifecycle.viewModelScope
 import com.orlovdanylo.fromonetoninegame.base.BaseViewModel
 import com.orlovdanylo.fromonetoninegame.data.GameModelDB
 import com.orlovdanylo.fromonetoninegame.data.repository.GameRepositoryImpl
+import com.orlovdanylo.fromonetoninegame.presentation.game.undo_redo_operations.IUndoRedoOperation
+import com.orlovdanylo.fromonetoninegame.presentation.game.undo_redo_operations.UndoRedoOperation
 import com.orlovdanylo.fromonetoninegame.utils.GameUtils
 import kotlinx.coroutines.launch
 
-class GameViewModel(application: Application) : BaseViewModel(application) {
+class GameViewModel(
+    application: Application
+) : BaseViewModel(application), IUndoRedoOperation by UndoRedoOperation() {
 
     private val repository = GameRepositoryImpl(application)
 
-    val gameModels: MutableLiveData<List<GameModel>> = MutableLiveData()
+    val gameModels: MutableLiveData<MutableList<GameModel>> = MutableLiveData()
     val gameModelsCount: MutableLiveData<Int> = MutableLiveData()
     val selectedModel: MutableLiveData<GameModel?> = MutableLiveData()
     val pairNumbers: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
-    val isGameFinished: MutableLiveData<Boolean> = MutableLiveData()
 
+    val isGameFinished: MutableLiveData<Boolean> = MutableLiveData()
     val startTime: MutableLiveData<Long> = MutableLiveData()
     val gameTime: MutableLiveData<Long> = MutableLiveData()
 
@@ -31,7 +35,7 @@ class GameViewModel(application: Application) : BaseViewModel(application) {
             } else {
                 val storedGame = repository.getLastGameFromDatabase()
                 convertToDisplayableGame(storedGame!!)
-            }
+            }.toMutableList()
             gameModelsCount.value = gameModels.value!!.count { !it.isCrossed }
         }
     }
@@ -65,9 +69,9 @@ class GameViewModel(application: Application) : BaseViewModel(application) {
         val lastModelId = gameModels.value!!.last().id + 1
         val restValues = gameModels.value!!.filter { !it.isCrossed }
 
-        gameModels.value = gameModels.value!! + restValues.mapIndexed { index, model ->
+        gameModels.value!!.addAll(restValues.mapIndexed { index, model ->
             GameModel(index + lastModelId, model.num, false)
-        }
+        })
         gameModelsCount.value = gameModels.value!!.count { !it.isCrossed }
     }
 
@@ -90,8 +94,13 @@ class GameViewModel(application: Application) : BaseViewModel(application) {
     }
 
     private fun setValuesCrossed(start: Int, end: Int) {
-        gameModels.value!![start].isCrossed = true
-        gameModels.value!![end].isCrossed = true
+        val startModel = gameModels.value!![start]
+        val endModel = gameModels.value!![end]
+        undoStack.value!!.add(NumberRemoval(startModel, endModel))
+        redoStack.value!!.clear()
+
+        gameModels.value!![start] = startModel.copy(isCrossed = true)
+        gameModels.value!![end] = endModel.copy(isCrossed = true)
 
         pairNumbers.value = start to end
 
@@ -104,12 +113,7 @@ class GameViewModel(application: Application) : BaseViewModel(application) {
 
     private fun convertToDisplayableGame(gameDbModel: GameModelDB): List<GameModel> {
         return gameDbModel.gameDigits.mapIndexed { index, c ->
-            GameModel(
-                id = index,
-                num = c.toString().toInt(),
-                isCrossed = c.toString().toInt() == 0,
-                isSelected = false
-            )
+            GameModel.fromMapIndexed(index, c.toString())
         }
     }
 

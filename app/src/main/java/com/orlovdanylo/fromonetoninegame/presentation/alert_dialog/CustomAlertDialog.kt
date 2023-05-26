@@ -37,8 +37,8 @@ class CustomAlertDialog(
         }
 
 //        val tvMessage = findViewById<TextView>(R.id.tvMessage)
-//        if (title != null) {
-//            tvMessage.text = title
+//        if (message != null) {
+//            tvMessage.text = message
 //        } else {
 //            tvMessage.visibility = View.GONE
 //        }
