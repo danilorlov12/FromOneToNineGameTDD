@@ -16,6 +16,7 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/drawable/ic_menu_logo.xml" value="0.1615" />
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/drawable/ic_photo_2023_02_25_13_50_58_background_.xml" value="0.1615" />
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/drawable/ic_photo_2023_02_25_13_50_58_background_1.xml" value="0.1615" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/drawable/ic_undo.xml" value="0.176" />
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/drawable/rectangel_border_filled.xml" value="0.176" />
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/drawable/rectangle_border.xml" value="0.176" />
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/drawable/rectangle_border_2dp.xml" value="0.1615" />
@@ -26,6 +27,7 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/dialog_finish_game.xml" value="0.2421875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/dialog_finished_game.xml" value="0.2421875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/fragment_game.xml" value="0.228125" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/fragment_game_bottom_menu.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/fragment_info_game.xml" value="0.2421875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/fragment_menu.xml" value="0.2421875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/FromOneToNineGame/app/src/main/res/layout/item_alt.xml" value="0.24114583333333334" />

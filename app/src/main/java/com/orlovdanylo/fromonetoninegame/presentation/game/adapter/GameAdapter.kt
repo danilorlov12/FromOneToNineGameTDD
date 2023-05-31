@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.orlovdanylo.fromonetoninegame.R
-import com.orlovdanylo.fromonetoninegame.presentation.game.GameModel
+import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
 
 class GameAdapter(
     private val clickListener: ClickListener,

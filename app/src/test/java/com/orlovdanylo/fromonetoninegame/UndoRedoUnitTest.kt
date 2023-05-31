@@ -2,7 +2,7 @@ package com.orlovdanylo.fromonetoninegame
 
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.orlovdanylo.fromonetoninegame.presentation.game.GameModel
+import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
 import com.orlovdanylo.fromonetoninegame.presentation.game.GameViewModel
 import com.orlovdanylo.fromonetoninegame.utils.GameUtils
 import org.junit.Assert.assertEquals
@@ -70,8 +70,8 @@ class UndoRedoUnitTest {
         test_one_model_undo()
 
         val lastCanceled = viewModel.redoStack.value!!.last()
-        assertEquals(viewModel.gameModels.value!![0].copy(isCrossed = true), lastCanceled.number1)
-        assertEquals(viewModel.gameModels.value!![9].copy(isCrossed = true), lastCanceled.number2)
+        assertEquals(viewModel.gameModels.value!![0], lastCanceled.number1)
+        assertEquals(viewModel.gameModels.value!![9], lastCanceled.number2)
 
         viewModel.redo(viewModel.gameModels.value!!)
 

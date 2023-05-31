@@ -3,7 +3,6 @@ package com.orlovdanylo.fromonetoninegame.presentation.game
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.orlovdanylo.fromonetoninegame.R
@@ -12,7 +11,7 @@ import com.orlovdanylo.fromonetoninegame.presentation.alert_dialog.CustomAlertDi
 import com.orlovdanylo.fromonetoninegame.presentation.game.adapter.ClickListener
 import com.orlovdanylo.fromonetoninegame.presentation.game.adapter.GameAdapter
 import com.orlovdanylo.fromonetoninegame.utils.CountUpTimer
-import com.orlovdanylo.fromonetoninegame.presentation.game.GameFragmentArgs
+import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
 import java.util.concurrent.TimeUnit
 
 class GameFragment : BaseFragment<GameViewModel>() {
@@ -27,7 +26,6 @@ class GameFragment : BaseFragment<GameViewModel>() {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvDigits)
-        val btnUpdateModels = view.findViewById<AppCompatButton>(R.id.btnUpdateModels)
         val tvGameTime = view.findViewById<TextView>(R.id.tvGameTime)
 
         val gameAdapter = GameAdapter(object : ClickListener {
@@ -40,10 +38,9 @@ class GameFragment : BaseFragment<GameViewModel>() {
             adapter = gameAdapter
             itemAnimator = null
         }
-        btnUpdateModels.setOnClickListener {
+        tvGameTime.setOnClickListener {
             viewModel.updateNumbers()
         }
-
         viewModel.initGame(GameFragmentArgs.fromBundle(requireArguments()).isNewGame)
 
         viewModel.startTime.observe(viewLifecycleOwner) { time ->
@@ -54,8 +51,12 @@ class GameFragment : BaseFragment<GameViewModel>() {
 
             gameAdapter.submitList(models)
         }
-        viewModel.gameModelsCount.observe(viewLifecycleOwner) { count ->
-            btnUpdateModels.isEnabled = count < 1000
+        viewModel.updatedPair.observe(viewLifecycleOwner) { pair ->
+            if (pair != null) {
+                gameAdapter.notifyItemChanged(pair.first)
+                gameAdapter.notifyItemChanged(pair.second)
+                viewModel.selectedModel.value = null
+            }
         }
         viewModel.selectedModel.observe(viewLifecycleOwner) { model ->
             val item = if (model != null) {
@@ -63,7 +64,7 @@ class GameFragment : BaseFragment<GameViewModel>() {
                 item.isSelected = true
                 item
             } else {
-                val item = viewModel.gameModels.value!!.first { it.isSelected }
+                val item = viewModel.gameModels.value!!.firstOrNull { it.isSelected } ?: return@observe
                 item.isSelected = false
                 item
             }

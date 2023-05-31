@@ -1,6 +1,6 @@
 package com.orlovdanylo.fromonetoninegame.utils
 
-import com.orlovdanylo.fromonetoninegame.presentation.game.GameModel
+import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
 
 object GameUtils {
 

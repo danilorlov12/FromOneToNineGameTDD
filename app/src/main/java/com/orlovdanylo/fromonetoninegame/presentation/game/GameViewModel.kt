@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.orlovdanylo.fromonetoninegame.base.BaseViewModel
 import com.orlovdanylo.fromonetoninegame.data.GameModelDB
 import com.orlovdanylo.fromonetoninegame.data.repository.GameRepositoryImpl
+import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
+import com.orlovdanylo.fromonetoninegame.presentation.game.models.NumberRemoval
 import com.orlovdanylo.fromonetoninegame.presentation.game.undo_redo_operations.IUndoRedoOperation
 import com.orlovdanylo.fromonetoninegame.presentation.game.undo_redo_operations.UndoRedoOperation
 import com.orlovdanylo.fromonetoninegame.utils.GameUtils
@@ -69,10 +71,12 @@ class GameViewModel(
         val lastModelId = gameModels.value!!.last().id + 1
         val restValues = gameModels.value!!.filter { !it.isCrossed }
 
-        gameModels.value!!.addAll(restValues.mapIndexed { index, model ->
+        gameModels.value = (gameModels.value!! + restValues.mapIndexed { index, model ->
             GameModel(index + lastModelId, model.num, false)
-        })
+        }).toMutableList()
         gameModelsCount.value = gameModels.value!!.count { !it.isCrossed }
+
+        updateStacks(arrayListOf(), arrayListOf())
     }
 
     private fun checkNumbers(gameModel: GameModel) {
@@ -96,8 +100,8 @@ class GameViewModel(
     private fun setValuesCrossed(start: Int, end: Int) {
         val startModel = gameModels.value!![start]
         val endModel = gameModels.value!![end]
-        undoStack.value!!.add(NumberRemoval(startModel, endModel))
-        redoStack.value!!.clear()
+
+        updateStacks(ArrayList(undoStack.value!! + NumberRemoval(startModel, endModel)), arrayListOf())
 
         gameModels.value!![start] = startModel.copy(isCrossed = true)
         gameModels.value!![end] = endModel.copy(isCrossed = true)
