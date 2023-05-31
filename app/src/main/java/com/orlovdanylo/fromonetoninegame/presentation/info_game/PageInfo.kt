@@ -1,6 +1,6 @@
 package com.orlovdanylo.fromonetoninegame.presentation.info_game
 
-import com.orlovdanylo.fromonetoninegame.presentation.game.GameModel
+import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
 
 data class PageInfo(
     val descriptionResId: Int,

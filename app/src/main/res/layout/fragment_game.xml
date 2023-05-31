@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnUpdateModels"
+        app:layout_constraintBottom_toTopOf="@+id/gameBottomMenu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvGameTime"
@@ -30,14 +30,10 @@
         tools:listitem="@layout/item_game_model"
         tools:spanCount="9" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnUpdateModels"
+    <com.orlovdanylo.fromonetoninegame.presentation.game.GameBottomMenuView
+        android:id="@+id/gameBottomMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp"
-        android:background="@drawable/button_selector"
-        android:text="@string/add_new_digits"
-        android:textColor="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
