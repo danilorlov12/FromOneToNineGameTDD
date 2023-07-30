@@ -17,7 +17,7 @@ android {
 
         def versionMajor = 1
         def versionMinor = 1
-        def versionPatch = 0
+        def versionPatch = 1
         versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
         if (versionPatch == 0) {
             versionName "${versionMajor}.${versionMinor}"
