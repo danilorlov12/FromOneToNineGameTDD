@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.orlovdanylo.fromonetoninegame.R
+import com.orlovdanylo.fromonetoninegame.analytics.AnalyticsButton
+import com.orlovdanylo.fromonetoninegame.analytics.logEventClickListener
 import com.orlovdanylo.fromonetoninegame.base.BaseFragment
 import com.orlovdanylo.fromonetoninegame.presentation.info_game.adapter.InfoGameAdapter
 
@@ -44,10 +46,10 @@ class InfoGameFragment : BaseFragment<InfoGameViewModel>() {
         viewModel.closeFragment.observe(viewLifecycleOwner) {
             if (it) navController.navigateUp()
         }
-        ivNextPage.setOnClickListener {
+        ivNextPage.logEventClickListener(requireActivity(), AnalyticsButton.NEXT_PAGE) {
             viewModel.nextPage()
         }
-        ivPreviousPage.setOnClickListener {
+        ivPreviousPage.logEventClickListener(requireActivity(), AnalyticsButton.PREVIOUS_PAGE) {
             viewModel.previousPage()
         }
     }
