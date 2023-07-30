@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import com.orlovdanylo.fromonetoninegame.R
+import com.orlovdanylo.fromonetoninegame.analytics.AnalyticsButton
+import com.orlovdanylo.fromonetoninegame.analytics.logEventClickListener
 
 class GameBottomMenuView : ConstraintLayout {
 
@@ -36,19 +38,24 @@ class GameBottomMenuView : ConstraintLayout {
         viewModel.gameModelsCount.observe(viewLifecycleOwner) { count ->
             btnAddDigits.isEnabled = count < 1000
         }
+
         viewModel.undoStack.observe(viewLifecycleOwner) { stack ->
             btnUndo.isEnabled = stack.isNotEmpty()
         }
+
         viewModel.redoStack.observe(viewLifecycleOwner) { stack ->
             btnRedo.isEnabled = stack.isNotEmpty()
         }
-        btnUndo.setOnClickListener {
+
+        btnUndo.logEventClickListener(context, AnalyticsButton.UNDO) {
             viewModel.undo(viewModel.gameModels.value!!)
         }
-        btnRedo.setOnClickListener {
+
+        btnRedo.logEventClickListener(context, AnalyticsButton.REDO) {
             viewModel.redo(viewModel.gameModels.value!!)
         }
-        btnAddDigits.setOnClickListener {
+
+        btnAddDigits.logEventClickListener(context, AnalyticsButton.ADD_DIGITS) {
             viewModel.updateNumbers()
         }
     }

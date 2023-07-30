@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.orlovdanylo.fromonetoninegame.presentation.MainActivity
 
 abstract class BaseFragment<VM: BaseViewModel> : Fragment() {
 
@@ -29,5 +30,10 @@ abstract class BaseFragment<VM: BaseViewModel> : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as MainActivity).analytics.logScreenEvent(javaClass.simpleName)
     }
 }

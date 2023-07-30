@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "620825640741",
+    "project_id": "fromonetoninegame",
+    "storage_bucket": "fromonetoninegame.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620825640741:android:a102a2b0dc7fe3725ae4cc",
+        "android_client_info": {
+          "package_name": "com.orlovdanylo.fromonetoninegame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620825640741-17e2hg73mrs2o6m2dh5ksapa4b6964gi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3bDhYI75SBrX-fYWtUt9G8nXM57Zpqa8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620825640741-17e2hg73mrs2o6m2dh5ksapa4b6964gi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -6,6 +6,8 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageButton
 import com.orlovdanylo.fromonetoninegame.R
+import com.orlovdanylo.fromonetoninegame.analytics.AnalyticsButton
+import com.orlovdanylo.fromonetoninegame.analytics.logEventClickListener
 import com.orlovdanylo.fromonetoninegame.base.BaseFragment
 
 class MenuFragment : BaseFragment<MenuViewModel>() {
@@ -20,7 +22,7 @@ class MenuFragment : BaseFragment<MenuViewModel>() {
         viewModel.checkStoredGame()
 
         view.findViewById<AppCompatButton>(R.id.btnContinue).apply {
-            setOnClickListener {
+            logEventClickListener(requireActivity(), AnalyticsButton.CONTINUE) {
                 val action = MenuFragmentDirections.actionMenuFragmentToGameFragment(false)
                 navController.navigate(action)
             }
@@ -28,13 +30,18 @@ class MenuFragment : BaseFragment<MenuViewModel>() {
                 isEnabled = it
             }
         }
-        view.findViewById<AppCompatButton>(R.id.btnNewGame).setOnClickListener {
-            viewModel.deleteStoredGame()
-        }
-        view.findViewById<AppCompatImageButton>(R.id.btnInfo).setOnClickListener {
-            val action = MenuFragmentDirections.actionMenuFragmentToInfoFragment()
-            navController.navigate(action)
-        }
+
+        view.findViewById<AppCompatButton>(R.id.btnNewGame)
+            .logEventClickListener(requireActivity(), AnalyticsButton.NEW_GAME) {
+                viewModel.deleteStoredGame()
+            }
+
+        view.findViewById<AppCompatImageButton>(R.id.btnInfo)
+            .logEventClickListener(requireActivity(), AnalyticsButton.INFO) {
+                val action = MenuFragmentDirections.actionMenuFragmentToInfoFragment()
+                navController.navigate(action)
+            }
+
         viewModel.isGameDeleted.observe(viewLifecycleOwner) { isGameDeleted ->
             if (isGameDeleted) {
                 val action = MenuFragmentDirections.actionMenuFragmentToGameFragment(true)
@@ -42,6 +49,7 @@ class MenuFragment : BaseFragment<MenuViewModel>() {
                 viewModel.isGameDeleted.value = false
             }
         }
+
         view.findViewById<TextView>(R.id.tvVersion).text =
             requireActivity().application.packageManager.getPackageInfo(
                 requireActivity().application.packageName, 0
