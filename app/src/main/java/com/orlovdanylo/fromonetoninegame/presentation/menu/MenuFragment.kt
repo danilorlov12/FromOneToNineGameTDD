@@ -33,7 +33,8 @@ class MenuFragment : BaseFragment<MenuViewModel>() {
 
         view.findViewById<AppCompatButton>(R.id.btnNewGame)
             .logEventClickListener(requireActivity(), AnalyticsButton.NEW_GAME) {
-                viewModel.deleteStoredGame()
+                val action = MenuFragmentDirections.actionMenuFragmentToGameFragment(true)
+                navController.navigate(action)
             }
 
         view.findViewById<AppCompatImageButton>(R.id.btnInfo)
@@ -41,14 +42,6 @@ class MenuFragment : BaseFragment<MenuViewModel>() {
                 val action = MenuFragmentDirections.actionMenuFragmentToInfoFragment()
                 navController.navigate(action)
             }
-
-        viewModel.isGameDeleted.observe(viewLifecycleOwner) { isGameDeleted ->
-            if (isGameDeleted) {
-                val action = MenuFragmentDirections.actionMenuFragmentToGameFragment(true)
-                navController.navigate(action)
-                viewModel.isGameDeleted.value = false
-            }
-        }
 
         view.findViewById<TextView>(R.id.tvVersion).text =
             requireActivity().application.packageManager.getPackageInfo(

@@ -94,7 +94,7 @@ class GameFragment : BaseFragment<GameViewModel>() {
 
     override fun onPause() {
         super.onPause()
-        viewModel.prepareGameModelToSave()
+        viewModel.checkCurrentGame()
         countUpTimer.stop()
     }
 

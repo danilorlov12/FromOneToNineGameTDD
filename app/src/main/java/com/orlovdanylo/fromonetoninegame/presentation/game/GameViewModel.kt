@@ -31,6 +31,8 @@ class GameViewModel(
     fun initGame(isNewGame: Boolean) {
         viewModelScope.launch {
             gameModels.value = if (isNewGame) {
+                repository.deleteLastGameFromDatabase()
+
                 GameUtils.game.mapIndexed { index, s ->
                     GameModel(index, s.toInt(), false)
                 }
@@ -121,17 +123,25 @@ class GameViewModel(
         }
     }
 
-    fun prepareGameModelToSave() {
+    fun checkCurrentGame() {
         viewModelScope.launch {
-            val gameDbModel = GameModelDB(
-                id = 0,
-                gameDigits = gameModels.value?.joinToString("") {
-                    if (it.isCrossed) "0" else it.num.toString()
-                } ?: "",
-                time = gameTime.value ?: 0L,
-                pairCrossed = "pairCrossed"
-            )
-            repository.saveGameToDatabase(gameDbModel)
+            if (isGameFinished.value == true) {
+                repository.deleteLastGameFromDatabase()
+            } else {
+                prepareGameModelToSave()
+            }
         }
+    }
+
+    private suspend fun prepareGameModelToSave() {
+        val gameDbModel = GameModelDB(
+            id = 0,
+            gameDigits = gameModels.value?.joinToString("") {
+                if (it.isCrossed) "0" else it.num.toString()
+            } ?: "",
+            time = gameTime.value ?: 0L,
+            pairCrossed = "pairCrossed"
+        )
+        repository.saveGameToDatabase(gameDbModel)
     }
 }
