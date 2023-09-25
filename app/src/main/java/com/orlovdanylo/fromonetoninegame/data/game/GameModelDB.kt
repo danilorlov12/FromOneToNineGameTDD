@@ -1,4 +1,4 @@
-package com.orlovdanylo.fromonetoninegame.data
+package com.orlovdanylo.fromonetoninegame.data.game
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_menuFragment_to_infoFragment"
             app:destination="@id/infoFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment" />
     </fragment>
 
     <fragment
@@ -25,6 +28,11 @@
             app:argType="boolean"
             app:nullable="false" />
     </fragment>
+
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.orlovdanylo.fromonetoninegame.presentation.statistics.StatisticsFragment"
+        android:label="StatisticsFragment" />
 
     <fragment
         android:id="@+id/infoFragment"

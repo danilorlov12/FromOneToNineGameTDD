@@ -1,4 +1,4 @@
-package com.orlovdanylo.fromonetoninegame.data
+package com.orlovdanylo.fromonetoninegame.data.game
 
 import androidx.room.Dao
 import androidx.room.Insert

@@ -1,6 +1,6 @@
 package com.orlovdanylo.fromonetoninegame.domain
 
-import com.orlovdanylo.fromonetoninegame.data.GameModelDB
+import com.orlovdanylo.fromonetoninegame.data.game.GameModelDB
 
 interface GameRepository {
 

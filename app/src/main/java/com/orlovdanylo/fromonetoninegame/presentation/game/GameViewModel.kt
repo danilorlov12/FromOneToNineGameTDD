@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.orlovdanylo.fromonetoninegame.base.BaseViewModel
-import com.orlovdanylo.fromonetoninegame.data.GameModelDB
-import com.orlovdanylo.fromonetoninegame.data.repository.GameRepositoryImpl
+import com.orlovdanylo.fromonetoninegame.data.game.GameModelDB
+import com.orlovdanylo.fromonetoninegame.data.game.GameRepositoryImpl
 import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
 import com.orlovdanylo.fromonetoninegame.presentation.game.models.NumberRemoval
 import com.orlovdanylo.fromonetoninegame.presentation.game.undo_redo_operations.IUndoRedoOperation

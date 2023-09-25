@@ -1,8 +1,7 @@
-package com.orlovdanylo.fromonetoninegame.data.repository
+package com.orlovdanylo.fromonetoninegame.data.game
 
 import android.app.Application
-import com.orlovdanylo.fromonetoninegame.data.AppDatabase
-import com.orlovdanylo.fromonetoninegame.data.GameModelDB
+import com.orlovdanylo.fromonetoninegame.data.core.AppDatabase
 import com.orlovdanylo.fromonetoninegame.domain.GameRepository
 
 class GameRepositoryImpl(

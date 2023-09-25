@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvStatisticsTitle"
+        style="@style/TextViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/statistics"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvGamesPlayedTitle"
+        style="@style/TextViewSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="36dp"
+        android:text="@string/games_played"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvStatisticsTitle" />
+
+    <TextView
+        android:id="@+id/tvGamesPlayed"
+        style="@style/TextViewSubtitleBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvGamesPlayedTitle"
+        app:layout_constraintStart_toEndOf="@id/tvGamesPlayedTitle"
+        app:layout_constraintTop_toTopOf="@id/tvGamesPlayedTitle"
+        tools:text="12" />
+
+    <TextView
+        android:id="@+id/tvGamesFinishedTitle"
+        style="@style/TextViewSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/games_finished"
+        app:layout_constraintStart_toStartOf="@id/tvGamesPlayedTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvGamesPlayedTitle" />
+
+    <TextView
+        android:id="@+id/tvGamesFinished"
+        style="@style/TextViewSubtitleBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvGamesFinishedTitle"
+        app:layout_constraintStart_toEndOf="@id/tvGamesFinishedTitle"
+        app:layout_constraintTop_toTopOf="@id/tvGamesFinishedTitle"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/tvBestTimeTitle"
+        style="@style/TextViewSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/best_time"
+        app:layout_constraintStart_toStartOf="@id/tvGamesPlayedTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvGamesFinishedTitle" />
+
+    <TextView
+        android:id="@+id/tvBestTime"
+        style="@style/TextViewSubtitleBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvBestTimeTitle"
+        app:layout_constraintStart_toEndOf="@id/tvBestTimeTitle"
+        app:layout_constraintTop_toTopOf="@id/tvBestTimeTitle"
+        tools:text="12:22:12" />
+
+    <TextView
+        android:id="@+id/tvMinPairsTitle"
+        style="@style/TextViewSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/min_pairs_in_finished_game"
+        app:layout_constraintStart_toStartOf="@id/tvGamesPlayedTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvBestTimeTitle" />
+
+    <TextView
+        android:id="@+id/tvMinPairs"
+        style="@style/TextViewSubtitleBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvMinPairsTitle"
+        app:layout_constraintStart_toEndOf="@id/tvMinPairsTitle"
+        app:layout_constraintTop_toTopOf="@id/tvMinPairsTitle"
+        tools:text="1222" />
+
+    <TextView
+        android:id="@+id/tvMaxPairsTitle"
+        style="@style/TextViewSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/max_pairs_in_finished_game"
+        app:layout_constraintStart_toStartOf="@id/tvGamesPlayedTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvMinPairsTitle" />
+
+    <TextView
+        android:id="@+id/tvMaxPairs"
+        style="@style/TextViewSubtitleBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvMaxPairsTitle"
+        app:layout_constraintStart_toEndOf="@id/tvMaxPairsTitle"
+        app:layout_constraintTop_toTopOf="@id/tvMaxPairsTitle"
+        tools:text="428" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
