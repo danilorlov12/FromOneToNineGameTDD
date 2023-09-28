@@ -10,8 +10,8 @@ import com.orlovdanylo.fromonetoninegame.base.BaseFragment
 import com.orlovdanylo.fromonetoninegame.presentation.alert_dialog.CustomAlertDialog
 import com.orlovdanylo.fromonetoninegame.presentation.game.adapter.ClickListener
 import com.orlovdanylo.fromonetoninegame.presentation.game.adapter.GameAdapter
-import com.orlovdanylo.fromonetoninegame.utils.CountUpTimer
 import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
+import com.orlovdanylo.fromonetoninegame.utils.CountUpTimer
 import java.util.concurrent.TimeUnit
 
 class GameFragment : BaseFragment<GameViewModel>() {

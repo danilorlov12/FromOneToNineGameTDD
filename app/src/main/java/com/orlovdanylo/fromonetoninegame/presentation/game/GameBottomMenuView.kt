@@ -2,7 +2,7 @@ package com.orlovdanylo.fromonetoninegame.presentation.game
 
 import android.content.Context
 import android.util.AttributeSet
-import androidx.appcompat.widget.AppCompatImageButton
+import android.widget.Button
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeLifecycleOwner
@@ -31,9 +31,9 @@ class GameBottomMenuView : ConstraintLayout {
 
         viewModel = ViewModelProvider(findViewTreeViewModelStoreOwner()!!)[GameViewModel::class.java]
 
-        val btnUndo: AppCompatImageButton = findViewById(R.id.btnUndo)
-        val btnRedo: AppCompatImageButton = findViewById(R.id.btnRedo)
-        val btnAddDigits: AppCompatImageButton = findViewById(R.id.btnAddDigits)
+        val btnUndo = findViewById<Button>(R.id.btnUndo)
+        val btnRedo = findViewById<Button>(R.id.btnRedo)
+        val btnAddDigits = findViewById<Button>(R.id.btnAddDigits)
 
         viewModel.gameModelsCount.observe(viewLifecycleOwner) { count ->
             btnAddDigits.isEnabled = count < 1000
@@ -48,11 +48,11 @@ class GameBottomMenuView : ConstraintLayout {
         }
 
         btnUndo.logEventClickListener(context, AnalyticsButton.UNDO) {
-            viewModel.undo(viewModel.gameModels.value!!)
+            viewModel.undo(viewModel.gameModels.value!!, viewModel.deletedPairs)
         }
 
         btnRedo.logEventClickListener(context, AnalyticsButton.REDO) {
-            viewModel.redo(viewModel.gameModels.value!!)
+            viewModel.redo(viewModel.gameModels.value!!, viewModel.deletedPairs)
         }
 
         btnAddDigits.logEventClickListener(context, AnalyticsButton.ADD_DIGITS) {

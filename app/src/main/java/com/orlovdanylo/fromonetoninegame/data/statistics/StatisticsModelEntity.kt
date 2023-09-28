@@ -10,6 +10,6 @@ data class StatisticsModelEntity (
     val gamesPlayed: Int?,
     val gamesFinished: Int?,
     val bestTime: String?,
-    val minPairs: Int,
+    val minPairs: Int?,
     val maxPairs: Int?
 )

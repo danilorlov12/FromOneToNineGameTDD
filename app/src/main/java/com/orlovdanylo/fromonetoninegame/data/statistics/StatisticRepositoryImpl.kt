@@ -11,16 +11,36 @@ class StatisticRepositoryImpl(
 ) : StatisticsRepository {
 
     private val statisticsDao = AppDatabase.getInstance(application).statisticsDao()
-
-    override suspend fun isStatisticsSavedInDatabase(): Boolean {
-        return statisticsDao.getStatistics() != null
-    }
+    private val mapper = StatisticsMapper()
 
     override suspend fun getStatistics(): StatisticsModel {
-        return StatisticsMapper().toStatisticsModel(statisticsDao.getStatistics())
+        return mapper.toStatisticsModel(statisticsDao.getStatistics())
     }
 
-    override suspend fun updateStatistics(statistics: StatisticsModel) {
-        //statisticsDao.updateStatistics(statistics)
+    override suspend fun increasePlayedGame() {
+        val model = statisticsModel()
+        statisticsDao.updateStatistics(model.copy(gamesPlayed = model.gamesPlayed!! + 1))
+    }
+
+    override suspend fun updateFinishedGameStatistics(time: Long, pairs: Int) {
+        val model = statisticsModel()
+        statisticsDao.updateStatistics(model.copy(
+            gamesFinished = model.gamesFinished!! + 1,
+            bestTime = model.bestTime,
+            minPairs = if (model.minPairs != 0 && model.minPairs!! > pairs) pairs else model.minPairs,
+            maxPairs = if (model.maxPairs!! < pairs) pairs else model.maxPairs
+        ))
+    }
+
+    private suspend fun statisticsModel(): StatisticsModelEntity {
+        val statistics = statisticsDao.getStatistics()
+        return StatisticsModelEntity(
+            id = statistics?.id ?: 0,
+            gamesPlayed = statistics?.gamesPlayed ?: 0,
+            gamesFinished = statistics?.gamesFinished ?: 0,
+            bestTime = statistics?.bestTime ?: "00:00:00",
+            minPairs = statistics?.minPairs ?: 0,
+            maxPairs = statistics?.maxPairs ?: 0
+        )
     }
 }

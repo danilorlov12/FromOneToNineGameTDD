@@ -9,5 +9,5 @@ data class GameModelDB(
     val id: Int,
     val gameDigits: String,
     val time: Long,
-    val pairCrossed: String,
+    val pairCrossed: Int,
 )
