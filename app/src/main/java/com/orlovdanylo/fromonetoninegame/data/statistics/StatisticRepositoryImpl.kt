@@ -1,17 +1,14 @@
 package com.orlovdanylo.fromonetoninegame.data.statistics
 
-import android.app.Application
-import com.orlovdanylo.fromonetoninegame.data.core.AppDatabase
 import com.orlovdanylo.fromonetoninegame.data.mappers.StatisticsMapper
 import com.orlovdanylo.fromonetoninegame.domain.StatisticsRepository
 import com.orlovdanylo.fromonetoninegame.domain.model.StatisticsModel
 import com.orlovdanylo.fromonetoninegame.utils.smallestNonzero
 
 class StatisticRepositoryImpl(
-    application: Application
+    private val statisticsDao: StatisticsDao
 ) : StatisticsRepository {
 
-    private val statisticsDao = AppDatabase.getInstance(application).statisticsDao()
     private val mapper = StatisticsMapper()
 
     override suspend fun getStatistics(): StatisticsModel {

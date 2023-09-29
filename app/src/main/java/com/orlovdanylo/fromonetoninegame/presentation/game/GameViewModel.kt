@@ -3,10 +3,9 @@ package com.orlovdanylo.fromonetoninegame.presentation.game
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.orlovdanylo.fromonetoninegame.Repositories
 import com.orlovdanylo.fromonetoninegame.base.BaseViewModel
 import com.orlovdanylo.fromonetoninegame.data.game.GameModelDB
-import com.orlovdanylo.fromonetoninegame.data.game.GameRepositoryImpl
-import com.orlovdanylo.fromonetoninegame.data.statistics.StatisticRepositoryImpl
 import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
 import com.orlovdanylo.fromonetoninegame.presentation.game.models.NumberRemoval
 import com.orlovdanylo.fromonetoninegame.presentation.game.undo_redo_operations.IUndoRedoOperation
@@ -18,8 +17,8 @@ class GameViewModel(
     application: Application
 ) : BaseViewModel(application), IUndoRedoOperation by UndoRedoOperation() {
 
-    private val gameRepository = GameRepositoryImpl(application)
-    private val statisticsRepository = StatisticRepositoryImpl(application)
+    private val gameRepository = Repositories.gameRepository
+    private val statisticsRepository = Repositories.statisticsRepository
 
     val deletedPairs: MutableLiveData<Int> = MutableLiveData(0)
     val gameModels: MutableLiveData<MutableList<GameModel>> = MutableLiveData()
