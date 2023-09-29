@@ -2,7 +2,7 @@ package com.orlovdanylo.fromonetoninegame.presentation.game
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.Button
+import androidx.appcompat.widget.AppCompatImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeLifecycleOwner
@@ -31,9 +31,9 @@ class GameBottomMenuView : ConstraintLayout {
 
         viewModel = ViewModelProvider(findViewTreeViewModelStoreOwner()!!)[GameViewModel::class.java]
 
-        val btnUndo = findViewById<Button>(R.id.btnUndo)
-        val btnRedo = findViewById<Button>(R.id.btnRedo)
-        val btnAddDigits = findViewById<Button>(R.id.btnAddDigits)
+        val btnUndo = findViewById<AppCompatImageButton>(R.id.btnUndo)
+        val btnRedo = findViewById<AppCompatImageButton>(R.id.btnRedo)
+        val btnAddDigits = findViewById<AppCompatImageButton>(R.id.btnAddDigits)
 
         viewModel.gameModelsCount.observe(viewLifecycleOwner) { count ->
             btnAddDigits.isEnabled = count < 1000
