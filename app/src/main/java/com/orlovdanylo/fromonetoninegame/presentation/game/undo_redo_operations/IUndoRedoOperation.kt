@@ -9,7 +9,7 @@ interface IUndoRedoOperation {
     val undoStack: MutableLiveData<MutableList<NumberRemoval>>
     val redoStack: MutableLiveData<MutableList<NumberRemoval>>
 
-    fun undo(gameModels: MutableList<GameModel>)
-    fun redo(gameModels: MutableList<GameModel>)
+    fun undo(gameModels: MutableList<GameModel>, deletedPairs: MutableLiveData<Int>)
+    fun redo(gameModels: MutableList<GameModel>, deletedPairs: MutableLiveData<Int>)
     fun updateStacks(undoStack: MutableList<NumberRemoval>, redoStack: MutableList<NumberRemoval>)
 }

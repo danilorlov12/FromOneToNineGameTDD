@@ -14,7 +14,7 @@ class UndoRedoOperation : IUndoRedoOperation {
     override val redoStack: MutableLiveData<MutableList<NumberRemoval>> =
         MutableLiveData(arrayListOf())
 
-    override fun undo(gameModels: MutableList<GameModel>) {
+    override fun undo(gameModels: MutableList<GameModel>, deletedPairs: MutableLiveData<Int>) {
         val lastNumberRemoval = undoStack.value!!.last()
         undoStack.value = undoStack.value!!.subList(0, undoStack.value!!.size - 1)
 
@@ -31,9 +31,11 @@ class UndoRedoOperation : IUndoRedoOperation {
             )
         )
         updatedPair.value = Pair(firstModel.id, secondModel.id)
+
+        deletedPairs.value = deletedPairs.value!! - 2
     }
 
-    override fun redo(gameModels: MutableList<GameModel>) {
+    override fun redo(gameModels: MutableList<GameModel>, deletedPairs: MutableLiveData<Int>) {
         val lastNumberCanceled = redoStack.value!!.last()
         redoStack.value = redoStack.value!!.subList(0, redoStack.value!!.size - 1)
 
@@ -46,6 +48,8 @@ class UndoRedoOperation : IUndoRedoOperation {
         undoStack.value = ArrayList(undoStack.value!! + lastNumberCanceled)
 
         updatedPair.value = Pair(firstModel.id, secondModel.id)
+
+        deletedPairs.value = deletedPairs.value!! + 2
     }
 
     override fun updateStacks(

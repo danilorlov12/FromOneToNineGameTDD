@@ -10,9 +10,9 @@ import com.orlovdanylo.fromonetoninegame.base.BaseFragment
 import com.orlovdanylo.fromonetoninegame.presentation.alert_dialog.CustomAlertDialog
 import com.orlovdanylo.fromonetoninegame.presentation.game.adapter.ClickListener
 import com.orlovdanylo.fromonetoninegame.presentation.game.adapter.GameAdapter
-import com.orlovdanylo.fromonetoninegame.utils.CountUpTimer
 import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
-import java.util.concurrent.TimeUnit
+import com.orlovdanylo.fromonetoninegame.utils.CountUpTimer
+import com.orlovdanylo.fromonetoninegame.domain.model.TimeModel
 
 class GameFragment : BaseFragment<GameViewModel>() {
 
@@ -101,10 +101,8 @@ class GameFragment : BaseFragment<GameViewModel>() {
     private fun startTimer(time: Long, tvGameTime: TextView) {
         countUpTimer = object : CountUpTimer(time, 1000) {
             override fun onTick(elapsedTime: Long) {
-                val hours = TimeUnit.MILLISECONDS.toHours(elapsedTime)
-                val minutes = TimeUnit.MILLISECONDS.toMinutes(elapsedTime) % 60
-                val seconds = TimeUnit.MILLISECONDS.toSeconds(elapsedTime) % 60
-                tvGameTime.text = getString(R.string.time, hours, minutes, seconds)
+                val timeModel = TimeModel(elapsedTime)
+                tvGameTime.text = timeModel.displayableTime()
                 viewModel.gameTime.value = elapsedTime
             }
         }

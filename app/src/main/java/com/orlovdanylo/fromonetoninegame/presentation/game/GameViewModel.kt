@@ -4,8 +4,9 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.orlovdanylo.fromonetoninegame.base.BaseViewModel
-import com.orlovdanylo.fromonetoninegame.data.GameModelDB
-import com.orlovdanylo.fromonetoninegame.data.repository.GameRepositoryImpl
+import com.orlovdanylo.fromonetoninegame.data.game.GameModelDB
+import com.orlovdanylo.fromonetoninegame.data.game.GameRepositoryImpl
+import com.orlovdanylo.fromonetoninegame.data.statistics.StatisticRepositoryImpl
 import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
 import com.orlovdanylo.fromonetoninegame.presentation.game.models.NumberRemoval
 import com.orlovdanylo.fromonetoninegame.presentation.game.undo_redo_operations.IUndoRedoOperation
@@ -17,8 +18,10 @@ class GameViewModel(
     application: Application
 ) : BaseViewModel(application), IUndoRedoOperation by UndoRedoOperation() {
 
-    private val repository = GameRepositoryImpl(application)
+    private val gameRepository = GameRepositoryImpl(application)
+    private val statisticsRepository = StatisticRepositoryImpl(application)
 
+    val deletedPairs: MutableLiveData<Int> = MutableLiveData(0)
     val gameModels: MutableLiveData<MutableList<GameModel>> = MutableLiveData()
     val gameModelsCount: MutableLiveData<Int> = MutableLiveData()
     val selectedModel: MutableLiveData<GameModel?> = MutableLiveData()
@@ -31,13 +34,15 @@ class GameViewModel(
     fun initGame(isNewGame: Boolean) {
         viewModelScope.launch {
             gameModels.value = if (isNewGame) {
-                repository.deleteLastGameFromDatabase()
+                gameRepository.deleteLastGameFromDatabase()
+                statisticsRepository.increasePlayedGame()
 
                 GameUtils.game.mapIndexed { index, s ->
                     GameModel(index, s.toInt(), false)
                 }
             } else {
-                val storedGame = repository.getLastGameFromDatabase()
+                val storedGame = gameRepository.getLastGameFromDatabase()
+                deletedPairs.value = storedGame?.pairCrossed ?: 0
                 convertToDisplayableGame(storedGame!!)
             }.toMutableList()
             gameModelsCount.value = gameModels.value!!.count { !it.isCrossed }
@@ -46,7 +51,7 @@ class GameViewModel(
 
     fun initGameTime() {
         viewModelScope.launch {
-            val storedGame = repository.getLastGameFromDatabase()
+            val storedGame = gameRepository.getLastGameFromDatabase()
             startTime.value = storedGame?.time ?: 0L
         }
     }
@@ -109,11 +114,13 @@ class GameViewModel(
         gameModels.value!![end] = endModel.copy(isCrossed = true)
 
         pairNumbers.value = start to end
+        deletedPairs.value = deletedPairs.value!! + 2
 
         gameModelsCount.value = gameModels.value!!.count { !it.isCrossed }
 
         if (gameModelsCount.value == 0) {
             isGameFinished.value = true
+            saveFinishedGameStatistics()
         }
     }
 
@@ -123,10 +130,19 @@ class GameViewModel(
         }
     }
 
+    private fun saveFinishedGameStatistics() {
+        viewModelScope.launch {
+            statisticsRepository.updateFinishedGameStatistics(
+                time = gameTime.value ?: 0L,
+                pairs = deletedPairs.value ?: 0
+            )
+        }
+    }
+
     fun checkCurrentGame() {
         viewModelScope.launch {
             if (isGameFinished.value == true) {
-                repository.deleteLastGameFromDatabase()
+                gameRepository.deleteLastGameFromDatabase()
             } else {
                 prepareGameModelToSave()
             }
@@ -140,8 +156,8 @@ class GameViewModel(
                 if (it.isCrossed) "0" else it.num.toString()
             } ?: "",
             time = gameTime.value ?: 0L,
-            pairCrossed = "pairCrossed"
+            pairCrossed = deletedPairs.value ?: 0
         )
-        repository.saveGameToDatabase(gameDbModel)
+        gameRepository.saveGameToDatabase(gameDbModel)
     }
 }

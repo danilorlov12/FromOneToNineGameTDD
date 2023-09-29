@@ -9,6 +9,7 @@ import com.orlovdanylo.fromonetoninegame.R
 import com.orlovdanylo.fromonetoninegame.analytics.AnalyticsButton
 import com.orlovdanylo.fromonetoninegame.analytics.logEventClickListener
 import com.orlovdanylo.fromonetoninegame.base.BaseFragment
+import com.orlovdanylo.fromonetoninegame.utils.getPackageInfoCompat
 
 class MenuFragment : BaseFragment<MenuViewModel>() {
 
@@ -43,9 +44,16 @@ class MenuFragment : BaseFragment<MenuViewModel>() {
                 navController.navigate(action)
             }
 
+        view.findViewById<AppCompatButton>(R.id.btnStatistics).apply {
+            logEventClickListener(requireActivity(), AnalyticsButton.STATISTICS) {
+                val action = MenuFragmentDirections.actionMenuFragmentToStatisticsFragment()
+                navController.navigate(action)
+            }
+        }
+
         view.findViewById<TextView>(R.id.tvVersion).text =
-            requireActivity().application.packageManager.getPackageInfo(
-                requireActivity().application.packageName, 0
-            ).versionName
+            requireActivity().application.packageManager
+                .getPackageInfoCompat(requireActivity().application.packageName, 0)
+                .versionName
     }
 }
