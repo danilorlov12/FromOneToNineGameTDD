@@ -1,10 +1,10 @@
-package com.orlovdanylo.fromonetoninegame.utils
+package com.orlovdanylo.fromonetoninegame.data.info_pages
 
 import com.orlovdanylo.fromonetoninegame.R
+import com.orlovdanylo.fromonetoninegame.domain.InfoPagesRepository
 import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
-import com.orlovdanylo.fromonetoninegame.presentation.info_game.PageInfo
 
-object InfoPageUtils {
+class InfoPagesRepositoryImpl : InfoPagesRepository {
 
     private val secondPageInfo = listOf(
         "0", "0", "0", "0", "0",
@@ -30,39 +30,38 @@ object InfoPageUtils {
         "0", "0", "0", "0", "0"
     )
 
-    val pages = HashMap<Int, PageInfo>().apply {
+    override fun fetchPages(): HashMap<Int, InfoPage> = HashMap<Int, InfoPage>().apply {
         put(
-            0, PageInfo(
+            0, InfoPage(
                 R.string.purpose_of_the_game,
                 emptyList()
             )
         )
         put(
-            1, PageInfo(
+            1, InfoPage(
                 R.string.tap_on_pair,
                 convertToModelList(secondPageInfo)
             )
         )
         put(
-            2, PageInfo(
+            2, InfoPage(
                 R.string.remove_vertically_horizontally,
                 convertToModelList(thirdPageInfo)
             )
         )
         put(
-            3, PageInfo(
+            3, InfoPage(
                 R.string.remove_in_between,
                 convertToModelList(fourthPageInfo)
             )
         )
         put(
-            4, PageInfo(
+            4, InfoPage(
                 R.string.remove_last_first,
                 convertToModelList(fifthPageInfo)
             )
         )
     }
-
 
     private fun convertToModelList(list: List<String>): List<GameModel> {
         return list.mapIndexed { index, num ->

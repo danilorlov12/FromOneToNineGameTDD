@@ -7,6 +7,8 @@ import com.orlovdanylo.fromonetoninegame.data.core.StatisticsMigration
 import com.orlovdanylo.fromonetoninegame.data.game.GameRepositoryImpl
 import com.orlovdanylo.fromonetoninegame.data.statistics.StatisticRepositoryImpl
 import com.orlovdanylo.fromonetoninegame.domain.GameRepository
+import com.orlovdanylo.fromonetoninegame.domain.InfoPagesRepository
+import com.orlovdanylo.fromonetoninegame.data.info_pages.InfoPagesRepositoryImpl
 import com.orlovdanylo.fromonetoninegame.domain.StatisticsRepository
 
 object Repositories {
@@ -25,6 +27,10 @@ object Repositories {
 
     val statisticsRepository: StatisticsRepository by lazy {
         StatisticRepositoryImpl(database.statisticsDao())
+    }
+
+    val infoPagesRepository: InfoPagesRepository by lazy {
+        InfoPagesRepositoryImpl()
     }
 
     fun init(context: Context) {

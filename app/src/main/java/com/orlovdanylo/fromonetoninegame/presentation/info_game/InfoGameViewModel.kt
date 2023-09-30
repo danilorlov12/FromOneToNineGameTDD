@@ -2,12 +2,16 @@ package com.orlovdanylo.fromonetoninegame.presentation.info_game
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.orlovdanylo.fromonetoninegame.Repositories
 import com.orlovdanylo.fromonetoninegame.base.BaseViewModel
-import com.orlovdanylo.fromonetoninegame.utils.InfoPageUtils
+import com.orlovdanylo.fromonetoninegame.data.info_pages.InfoPage
 
 class InfoGameViewModel(application: Application) : BaseViewModel(application) {
 
-    val currentPage: MutableLiveData<PageInfo> = MutableLiveData()
+    private val infoPagesRepository = Repositories.infoPagesRepository
+
+    private val pages = infoPagesRepository.fetchPages()
+    val currentPage: MutableLiveData<InfoPage> = MutableLiveData()
 
     fun initFirstPage() {
         currentPage.value = pages.getValue(0)
@@ -32,12 +36,8 @@ class InfoGameViewModel(application: Application) : BaseViewModel(application) {
     }
 
     private fun findCurrentPageKey(): Int {
-        return InfoPageUtils.pages.entries.firstOrNull {
+        return pages.entries.firstOrNull {
             currentPage.value == it.value
         }?.key ?: 0
-    }
-
-    companion object {
-        private val pages = InfoPageUtils.pages
     }
 }
