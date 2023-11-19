@@ -15,9 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OneToNineGame"
         tools:targetApi="31">
+
         <activity
-            android:name="com.orlovdanylo.fromonetoninegame.presentation.MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.orlovdanylo.fromonetoninegame.presentation.loader.LoaderActivity"
+            android:exported="true"
+            android:theme="@style/SplashTheme"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
