@@ -16,26 +16,28 @@ import com.orlovdanylo.fromonetoninegame.domain.model.TimeModel
 
 class GameFragment : BaseFragment<GameViewModel>() {
 
-    private lateinit var countUpTimer: CountUpTimer
-
     override val layoutId: Int = R.layout.fragment_game
-
     override fun viewModelClass() = GameViewModel::class.java
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private lateinit var countUpTimer: CountUpTimer
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.rvDigits)
-        val tvGameTime = view.findViewById<TextView>(R.id.tvGameTime)
-
-        val gameAdapter = GameAdapter(object : ClickListener {
+    private val adapter: GameAdapter by lazy {
+        GameAdapter(object : ClickListener {
             override fun click(model: GameModel) {
                 viewModel.tap(model.id)
             }
         })
-        recyclerView.apply {
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val tvGameTime = view.findViewById<TextView>(R.id.tvGameTime)
+        val tvRemovedNumbers = view.findViewById<TextView>(R.id.tvRemovedNumbers)
+
+        view.findViewById<RecyclerView>(R.id.rvDigits).apply {
             layoutManager = GridLayoutManager(context, 9)
-            adapter = gameAdapter
+            adapter = this@GameFragment.adapter
             itemAnimator = null
         }
         tvGameTime.setOnClickListener {
@@ -48,13 +50,12 @@ class GameFragment : BaseFragment<GameViewModel>() {
         }
         viewModel.gameModels.observe(viewLifecycleOwner) { models ->
             if (models.isNullOrEmpty()) return@observe
-
-            gameAdapter.submitList(models)
+            adapter.submitList(models)
         }
         viewModel.updatedPair.observe(viewLifecycleOwner) { pair ->
             if (pair != null) {
-                gameAdapter.notifyItemChanged(pair.first)
-                gameAdapter.notifyItemChanged(pair.second)
+                adapter.notifyItemChanged(pair.first)
+                adapter.notifyItemChanged(pair.second)
                 viewModel.selectedModel.value = null
             }
         }
@@ -68,12 +69,15 @@ class GameFragment : BaseFragment<GameViewModel>() {
                 item.isSelected = false
                 item
             }
-            gameAdapter.notifyItemChanged(item.id)
+            adapter.notifyItemChanged(item.id)
         }
         viewModel.pairNumbers.observe(viewLifecycleOwner) { pair ->
             pair.toList().forEach {
-                gameAdapter.notifyItemChanged(it)
+                adapter.notifyItemChanged(it)
             }
+        }
+        viewModel.removedNumbers.observe(viewLifecycleOwner) { numbers ->
+            tvRemovedNumbers.text = numbers.toString()
         }
         viewModel.isGameFinished.observe(viewLifecycleOwner) { isGameFinished ->
             if (isGameFinished) {
@@ -85,6 +89,10 @@ class GameFragment : BaseFragment<GameViewModel>() {
                     .create()
             }
         }
+    }
+
+    private fun initView() {
+
     }
 
     override fun onResume() {

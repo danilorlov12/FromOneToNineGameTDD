@@ -48,11 +48,11 @@ class GameBottomMenuView : ConstraintLayout {
         }
 
         btnUndo.logEventClickListener(context, AnalyticsButton.UNDO) {
-            viewModel.undo(viewModel.gameModels.value!!, viewModel.deletedPairs)
+            viewModel.undo(viewModel.gameModels.value!!, viewModel.removedNumbers)
         }
 
         btnRedo.logEventClickListener(context, AnalyticsButton.REDO) {
-            viewModel.redo(viewModel.gameModels.value!!, viewModel.deletedPairs)
+            viewModel.redo(viewModel.gameModels.value!!, viewModel.removedNumbers)
         }
 
         btnAddDigits.logEventClickListener(context, AnalyticsButton.ADD_DIGITS) {

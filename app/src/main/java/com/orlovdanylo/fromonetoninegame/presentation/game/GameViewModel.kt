@@ -20,7 +20,7 @@ class GameViewModel(
     private val gameRepository = Repositories.gameRepository
     private val statisticsRepository = Repositories.statisticsRepository
 
-    val deletedPairs: MutableLiveData<Int> = MutableLiveData(0)
+    val removedNumbers: MutableLiveData<Int> = MutableLiveData(0)
     val gameModels: MutableLiveData<MutableList<GameModel>> = MutableLiveData()
     val gameModelsCount: MutableLiveData<Int> = MutableLiveData()
     val selectedModel: MutableLiveData<GameModel?> = MutableLiveData()
@@ -41,7 +41,7 @@ class GameViewModel(
                 }
             } else {
                 val storedGame = gameRepository.getLastGameFromDatabase()
-                deletedPairs.value = storedGame?.pairCrossed ?: 0
+                removedNumbers.value = storedGame?.pairCrossed ?: 0
                 convertToDisplayableGame(storedGame!!)
             }.toMutableList()
             gameModelsCount.value = gameModels.value!!.count { !it.isCrossed }
@@ -113,7 +113,7 @@ class GameViewModel(
         gameModels.value!![end] = endModel.copy(isCrossed = true)
 
         pairNumbers.value = start to end
-        deletedPairs.value = deletedPairs.value!! + 2
+        removedNumbers.value = removedNumbers.value!! + 2
 
         gameModelsCount.value = gameModels.value!!.count { !it.isCrossed }
 
@@ -133,7 +133,7 @@ class GameViewModel(
         viewModelScope.launch {
             statisticsRepository.updateFinishedGameStatistics(
                 time = gameTime.value ?: 0L,
-                pairs = deletedPairs.value ?: 0
+                pairs = removedNumbers.value ?: 0
             )
         }
     }
@@ -155,7 +155,7 @@ class GameViewModel(
                 if (it.isCrossed) "0" else it.num.toString()
             } ?: "",
             time = gameTime.value ?: 0L,
-            pairCrossed = deletedPairs.value ?: 0
+            pairCrossed = removedNumbers.value ?: 0
         )
         gameRepository.saveGameToDatabase(gameDbModel)
     }
