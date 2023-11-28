@@ -35,6 +35,8 @@ class GameBottomMenuView : ConstraintLayout {
         val btnRedo = findViewById<AppCompatImageButton>(R.id.btnRedo)
         val btnAddDigits = findViewById<AppCompatImageButton>(R.id.btnAddDigits)
 
+        btnAddDigits.isEnabled = false
+
         viewModel.gameModelsCount.observe(viewLifecycleOwner) { count ->
             btnAddDigits.isEnabled = count < 1000
         }

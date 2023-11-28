@@ -32,20 +32,24 @@ class GameViewModel(
 
     fun initGame(isNewGame: Boolean) {
         viewModelScope.launch {
-            gameModels.value = if (isNewGame) {
-                gameRepository.deleteLastGameFromDatabase()
-                statisticsRepository.increasePlayedGame()
-
-                GameUtils.game.mapIndexed { index, s ->
-                    GameModel(index, s.toInt(), false)
-                }
-            } else {
-                val storedGame = gameRepository.getLastGameFromDatabase()
-                removedNumbers.value = storedGame?.pairCrossed ?: 0
-                convertToDisplayableGame(storedGame!!)
-            }.toMutableList()
+            if (isNewGame) initNewGame() else initOldGame()
             gameModelsCount.value = gameModels.value!!.count { !it.isCrossed }
         }
+    }
+
+    private suspend fun initNewGame() {
+        gameRepository.deleteLastGameFromDatabase()
+        statisticsRepository.increasePlayedGame()
+        gameModels.value = GameUtils.game.mapIndexed { index, s ->
+            GameModel(index, s.toInt(), false)
+        }.toMutableList()
+        startTime.value = 0L
+    }
+
+    private suspend fun initOldGame() {
+        val storedGame = gameRepository.getLastGameFromDatabase()
+        removedNumbers.value = storedGame?.pairCrossed ?: 0
+        gameModels.value = convertToDisplayableGame(storedGame!!)
     }
 
     fun initGameTime() {
@@ -123,10 +127,10 @@ class GameViewModel(
         }
     }
 
-    private fun convertToDisplayableGame(gameDbModel: GameModelDB): List<GameModel> {
+    private fun convertToDisplayableGame(gameDbModel: GameModelDB): MutableList<GameModel> {
         return gameDbModel.gameDigits.mapIndexed { index, c ->
             GameModel.fromMapIndexed(index, c.toString())
-        }
+        }.toMutableList()
     }
 
     private fun saveFinishedGameStatistics() {

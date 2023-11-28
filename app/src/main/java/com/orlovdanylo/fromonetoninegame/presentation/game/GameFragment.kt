@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.orlovdanylo.fromonetoninegame.R
 import com.orlovdanylo.fromonetoninegame.base.BaseFragment
+import com.orlovdanylo.fromonetoninegame.domain.model.TimeModel
 import com.orlovdanylo.fromonetoninegame.presentation.alert_dialog.CustomAlertDialog
 import com.orlovdanylo.fromonetoninegame.presentation.game.adapter.ClickListener
 import com.orlovdanylo.fromonetoninegame.presentation.game.adapter.GameAdapter
 import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
 import com.orlovdanylo.fromonetoninegame.utils.CountUpTimer
-import com.orlovdanylo.fromonetoninegame.domain.model.TimeModel
 
 class GameFragment : BaseFragment<GameViewModel>() {
 
@@ -60,7 +60,7 @@ class GameFragment : BaseFragment<GameViewModel>() {
             }
         }
         viewModel.selectedModel.observe(viewLifecycleOwner) { model ->
-            val item = if (model != null) {
+            val selectedItem = if (model != null) {
                 val item = viewModel.gameModels.value!!.first { it.id == model.id }
                 item.isSelected = true
                 item
@@ -69,7 +69,7 @@ class GameFragment : BaseFragment<GameViewModel>() {
                 item.isSelected = false
                 item
             }
-            adapter.notifyItemChanged(item.id)
+            adapter.notifyItemChanged(selectedItem.id)
         }
         viewModel.pairNumbers.observe(viewLifecycleOwner) { pair ->
             pair.toList().forEach {
@@ -89,10 +89,6 @@ class GameFragment : BaseFragment<GameViewModel>() {
                     .create()
             }
         }
-    }
-
-    private fun initView() {
-
     }
 
     override fun onResume() {
