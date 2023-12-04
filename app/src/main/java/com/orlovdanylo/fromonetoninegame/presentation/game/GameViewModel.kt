@@ -1,6 +1,5 @@
 package com.orlovdanylo.fromonetoninegame.presentation.game
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.orlovdanylo.fromonetoninegame.Repositories
@@ -13,9 +12,7 @@ import com.orlovdanylo.fromonetoninegame.presentation.game.undo_redo_operations.
 import com.orlovdanylo.fromonetoninegame.utils.GameUtils
 import kotlinx.coroutines.launch
 
-class GameViewModel(
-    application: Application
-) : BaseViewModel(application), IUndoRedoOperation by UndoRedoOperation() {
+class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation() {
 
     private val gameRepository = Repositories.gameRepository
     private val statisticsRepository = Repositories.statisticsRepository

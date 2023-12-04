@@ -3,8 +3,9 @@ package com.orlovdanylo.fromonetoninegame.base
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
-abstract class BaseViewModel(app: Application) : AndroidViewModel(app) {
+abstract class BaseViewModel : ViewModel() {
 
     val closeFragment: MutableLiveData<Boolean> = MutableLiveData()
 }

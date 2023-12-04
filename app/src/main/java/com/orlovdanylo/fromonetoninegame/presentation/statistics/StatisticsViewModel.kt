@@ -8,7 +8,7 @@ import com.orlovdanylo.fromonetoninegame.base.BaseViewModel
 import com.orlovdanylo.fromonetoninegame.domain.model.StatisticsModel
 import kotlinx.coroutines.launch
 
-class StatisticsViewModel(app: Application) : BaseViewModel(app) {
+class StatisticsViewModel : BaseViewModel() {
 
     private val statisticsRepository = Repositories.statisticsRepository
 

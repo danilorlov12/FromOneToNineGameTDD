@@ -6,7 +6,7 @@ import com.orlovdanylo.fromonetoninegame.Repositories
 import com.orlovdanylo.fromonetoninegame.base.BaseViewModel
 import com.orlovdanylo.fromonetoninegame.data.info_pages.InfoPage
 
-class InfoGameViewModel(application: Application) : BaseViewModel(application) {
+class InfoGameViewModel : BaseViewModel() {
 
     private val infoPagesRepository = Repositories.infoPagesRepository
 

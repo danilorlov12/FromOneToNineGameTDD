@@ -3,14 +3,14 @@ package com.orlovdanylo.fromonetoninegame.presentation.statistics
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import com.orlovdanylo.fromonetoninegame.R
 import com.orlovdanylo.fromonetoninegame.base.BaseFragment
 
 class StatisticsFragment : BaseFragment<StatisticsViewModel>() {
 
     override val layoutId: Int = R.layout.fragment_statistics
-
-    override fun viewModelClass() = StatisticsViewModel::class.java
+    override val viewModel: StatisticsViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.fragment.app.activityViewModels
 import com.orlovdanylo.fromonetoninegame.R
 import com.orlovdanylo.fromonetoninegame.analytics.AnalyticsButton
 import com.orlovdanylo.fromonetoninegame.analytics.logEventClickListener
@@ -14,8 +15,7 @@ import com.orlovdanylo.fromonetoninegame.utils.getPackageInfoCompat
 class MenuFragment : BaseFragment<MenuViewModel>() {
 
     override val layoutId: Int = R.layout.fragment_menu
-
-    override fun viewModelClass() = MenuViewModel::class.java
+    override val viewModel: MenuViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

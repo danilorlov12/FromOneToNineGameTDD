@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.orlovdanylo.fromonetoninegame.R
@@ -15,8 +16,7 @@ import com.orlovdanylo.fromonetoninegame.presentation.info_game.adapter.InfoGame
 class InfoGameFragment : BaseFragment<InfoGameViewModel>() {
 
     override val layoutId: Int = R.layout.fragment_info_game
-
-    override fun viewModelClass() = InfoGameViewModel::class.java
+    override val viewModel: InfoGameViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

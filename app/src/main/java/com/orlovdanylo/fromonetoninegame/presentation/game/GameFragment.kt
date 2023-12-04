@@ -3,6 +3,7 @@ package com.orlovdanylo.fromonetoninegame.presentation.game
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.orlovdanylo.fromonetoninegame.R
@@ -17,7 +18,7 @@ import com.orlovdanylo.fromonetoninegame.utils.CountUpTimer
 class GameFragment : BaseFragment<GameViewModel>() {
 
     override val layoutId: Int = R.layout.fragment_game
-    override fun viewModelClass() = GameViewModel::class.java
+    override val viewModel: GameViewModel by activityViewModels()
 
     private lateinit var countUpTimer: CountUpTimer
 
