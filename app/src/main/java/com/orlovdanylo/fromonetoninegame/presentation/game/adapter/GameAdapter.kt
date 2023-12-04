@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.orlovdanylo.fromonetoninegame.R
@@ -12,40 +11,66 @@ import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
 
 class GameAdapter(
     private val clickListener: ClickListener,
-) : ListAdapter<GameModel, GameAdapter.GameModelViewHolder>(GameDiffCallback) {
+) : ListAdapter<GameModel, RecyclerView.ViewHolder>(GameDiffCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameModelViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_game_model, parent, false)
-        return GameModelViewHolder(view)
+    override fun getItemViewType(position: Int): Int {
+        val model = getItem(position)
+        return when {
+            model.isSelected -> SELECTED_TYPE
+            model.isCrossed -> EMPTY_TYPE
+            else -> NUMBER_TYPE
+        }
     }
 
-    override fun onBindViewHolder(holder: GameModelViewHolder, position: Int) {
-        val model = getItem(position)
-        with(holder) {
-            tvNumber.background = ContextCompat.getDrawable(
-                itemView.context, if (model.isSelected)
-                    R.drawable.rectangel_border_filled
-                else
-                    R.drawable.rectangle_border
-            )
-            tvNumber.text = if (!model.isCrossed) model.num.toString() else ""
-            tvNumber.setTextColor(
-                ContextCompat.getColor(
-                    itemView.context, if (model.isSelected)
-                        R.color.black
-                    else
-                        R.color.gold
-                )
-            )
-            itemView.setOnClickListener {
-                clickListener.click(model)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            EMPTY_TYPE -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_game_model_empty, parent, false)
+                EmptyModelViewHolder(view)
+            }
+            SELECTED_TYPE -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_game_model_selected, parent, false)
+                SelectedModelViewHolder(view)
+            }
+            else -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_game_model, parent, false)
+                NumberModelViewHolder(view)
             }
         }
     }
 
-    inner class GameModelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val model = getItem(position)
+        when (holder.itemViewType) {
+            NUMBER_TYPE -> {
+                (holder as NumberModelViewHolder).tvNumber.text = model.num.toString()
+            }
+            SELECTED_TYPE -> {
+                (holder as SelectedModelViewHolder).tvNumber.text = model.num.toString()
+            }
+        }
+        holder.itemView.setOnClickListener {
+            clickListener.click(model)
+        }
+    }
+
+    inner class NumberModelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvNumber: TextView = itemView.findViewById(R.id.tvNumber)
+    }
+
+    inner class SelectedModelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val tvNumber: TextView = itemView.findViewById(R.id.tvNumber)
+    }
+
+    inner class EmptyModelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+    companion object {
+        private const val NUMBER_TYPE = 1
+        private const val SELECTED_TYPE = 2
+        private const val EMPTY_TYPE = 3
     }
 }
 

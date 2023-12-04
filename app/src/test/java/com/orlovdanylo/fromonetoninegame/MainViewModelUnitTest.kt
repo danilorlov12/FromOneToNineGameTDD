@@ -22,7 +22,7 @@ class MainViewModelUnitTest {
 
     @Before
     fun before() {
-        viewModel = GameViewModel(Application())
+        viewModel = GameViewModel()
 
         startModels = GameUtils.game.mapIndexed { index, s ->
             GameModel(index, s.toInt(), false)
