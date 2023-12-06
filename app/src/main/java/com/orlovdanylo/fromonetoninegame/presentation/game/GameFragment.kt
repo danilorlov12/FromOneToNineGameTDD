@@ -47,7 +47,7 @@ class GameFragment : BaseFragment<GameViewModel>() {
         viewModel.initGame(GameFragmentArgs.fromBundle(requireArguments()).isNewGame)
 
         viewModel.startTime.observe(viewLifecycleOwner) { time ->
-            startTimer(time, tvGameTime)
+            time?.let { startTimer(it, tvGameTime) }
         }
         viewModel.gameModels.observe(viewLifecycleOwner) { models ->
             if (models.isNullOrEmpty()) return@observe

@@ -24,7 +24,7 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
     val pairNumbers: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
 
     val isGameFinished: MutableLiveData<Boolean> = MutableLiveData()
-    val startTime: MutableLiveData<Long> = MutableLiveData()
+    val startTime: MutableLiveData<Long?> = MutableLiveData()
     val gameTime: MutableLiveData<Long> = MutableLiveData()
 
     fun initGame(isNewGame: Boolean) {
@@ -146,6 +146,7 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
             } else {
                 prepareGameModelToSave()
             }
+            startTime.value = null
         }
     }
 
