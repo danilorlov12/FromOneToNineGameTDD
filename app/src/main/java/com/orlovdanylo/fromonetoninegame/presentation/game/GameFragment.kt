@@ -13,14 +13,19 @@ import com.orlovdanylo.fromonetoninegame.presentation.alert_dialog.CustomAlertDi
 import com.orlovdanylo.fromonetoninegame.presentation.game.adapter.ClickListener
 import com.orlovdanylo.fromonetoninegame.presentation.game.adapter.GameAdapter
 import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
-import com.orlovdanylo.fromonetoninegame.utils.CountUpTimer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 
 class GameFragment : BaseFragment<GameViewModel>() {
 
     override val layoutId: Int = R.layout.fragment_game
     override val viewModel: GameViewModel by activityViewModels()
 
-    private lateinit var countUpTimer: CountUpTimer
+    private var stopwatchScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
 
     private val adapter: GameAdapter by lazy {
         GameAdapter(object : ClickListener {
@@ -46,8 +51,12 @@ class GameFragment : BaseFragment<GameViewModel>() {
         }
         viewModel.initGame(GameFragmentArgs.fromBundle(requireArguments()).isNewGame)
 
-        viewModel.startTime.observe(viewLifecycleOwner) { time ->
-            time?.let { startTimer(it, tvGameTime) }
+        viewModel.startTime.observe(viewLifecycleOwner) { time: Long? ->
+            if (time != null) startStopwatch(time)
+        }
+        viewModel.gameTime.observe(viewLifecycleOwner) { time ->
+            val timeModel = TimeModel(time)
+            tvGameTime.text = timeModel.displayableTime()
         }
         viewModel.gameModels.observe(viewLifecycleOwner) { models ->
             if (models.isNullOrEmpty()) return@observe
@@ -97,20 +106,20 @@ class GameFragment : BaseFragment<GameViewModel>() {
         viewModel.initGameTime()
     }
 
-    override fun onPause() {
-        super.onPause()
-        viewModel.checkCurrentGame()
-        countUpTimer.stop()
-    }
-
-    private fun startTimer(time: Long, tvGameTime: TextView) {
-        countUpTimer = object : CountUpTimer(time, 1000) {
-            override fun onTick(elapsedTime: Long) {
-                val timeModel = TimeModel(elapsedTime)
-                tvGameTime.text = timeModel.displayableTime()
+    private fun startStopwatch(time: Long) {
+        stopwatchScope.launch {
+            var elapsedTime = time
+            while (isActive) {
                 viewModel.gameTime.value = elapsedTime
+                elapsedTime += 1000
+                delay(1000)
             }
         }
-        countUpTimer.start()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopwatchScope.coroutineContext.cancelChildren()
+        viewModel.checkCurrentGame()
     }
 }

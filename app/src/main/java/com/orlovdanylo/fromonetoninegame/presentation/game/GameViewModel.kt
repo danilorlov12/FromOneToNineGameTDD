@@ -41,11 +41,13 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
             GameModel(index, s.toInt(), false)
         }.toMutableList()
         startTime.value = 0L
+        removedNumbers.value = 0
     }
 
     private suspend fun initOldGame() {
         val storedGame = gameRepository.getLastGameFromDatabase()
         removedNumbers.value = storedGame?.pairCrossed ?: 0
+        startTime.value = storedGame?.time ?: 0L
         gameModels.value = convertToDisplayableGame(storedGame!!)
     }
 

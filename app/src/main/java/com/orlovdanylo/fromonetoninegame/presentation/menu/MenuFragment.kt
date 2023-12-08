@@ -44,12 +44,11 @@ class MenuFragment : BaseFragment<MenuViewModel>() {
                 navController.navigate(action)
             }
 
-        view.findViewById<AppCompatButton>(R.id.btnStatistics).apply {
-            logEventClickListener(requireActivity(), AnalyticsButton.STATISTICS) {
+        view.findViewById<AppCompatButton>(R.id.btnStatistics)
+            .logEventClickListener(requireActivity(), AnalyticsButton.STATISTICS) {
                 val action = MenuFragmentDirections.actionMenuFragmentToStatisticsFragment()
                 navController.navigate(action)
             }
-        }
 
         view.findViewById<TextView>(R.id.tvVersion).text =
             requireActivity().application.packageManager

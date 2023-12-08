@@ -6,14 +6,16 @@ import androidx.appcompat.widget.AppCompatImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeLifecycleOwner
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import com.orlovdanylo.fromonetoninegame.R
 import com.orlovdanylo.fromonetoninegame.analytics.AnalyticsButton
 import com.orlovdanylo.fromonetoninegame.analytics.logEventClickListener
+import com.orlovdanylo.fromonetoninegame.presentation.MainActivity
 
 class GameBottomMenuView : ConstraintLayout {
 
-    private lateinit var viewModel: GameViewModel
+    private val viewModel: GameViewModel by lazy {
+        ViewModelProvider(context as MainActivity)[GameViewModel::class.java]
+    }
 
     constructor(context: Context) : super(context)
 
@@ -28,8 +30,6 @@ class GameBottomMenuView : ConstraintLayout {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         val viewLifecycleOwner = findViewTreeLifecycleOwner()!!
-
-        viewModel = ViewModelProvider(findViewTreeViewModelStoreOwner()!!)[GameViewModel::class.java]
 
         val btnUndo = findViewById<AppCompatImageButton>(R.id.btnUndo)
         val btnRedo = findViewById<AppCompatImageButton>(R.id.btnRedo)

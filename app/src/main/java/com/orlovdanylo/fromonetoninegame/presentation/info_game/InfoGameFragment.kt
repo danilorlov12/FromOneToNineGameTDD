@@ -35,6 +35,10 @@ class InfoGameFragment : BaseFragment<InfoGameViewModel>() {
         viewModel.initFirstPage()
 
         viewModel.currentPage.observe(viewLifecycleOwner) { pageInfo ->
+            if (pageInfo == null) {
+                navController.navigateUp()
+                return@observe
+            }
             tvDescription.text = getString(pageInfo.descriptionResId)
             if (pageInfo.listOfModels.isNotEmpty()) {
                 infoAdapter.submitList(pageInfo.listOfModels)
@@ -42,9 +46,6 @@ class InfoGameFragment : BaseFragment<InfoGameViewModel>() {
             } else {
                 rvDescription.visibility = View.GONE
             }
-        }
-        viewModel.closeFragment.observe(viewLifecycleOwner) {
-            if (it) navController.navigateUp()
         }
         ivNextPage.logEventClickListener(requireActivity(), AnalyticsButton.NEXT_PAGE) {
             viewModel.nextPage()
