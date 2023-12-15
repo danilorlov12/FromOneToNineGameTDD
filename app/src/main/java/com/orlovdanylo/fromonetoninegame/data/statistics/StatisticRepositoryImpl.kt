@@ -17,13 +17,13 @@ class StatisticRepositoryImpl(
 
     override suspend fun increasePlayedGame() {
         val model = statisticsModel()
-        statisticsDao.updateStatistics(model.copy(gamesPlayed = model.gamesPlayed!! + 1))
+        statisticsDao.updateStatistics(model.copy(gamesPlayed = model.gamesPlayed?.plus(1) ?: 1))
     }
 
     override suspend fun updateFinishedGameStatistics(time: Long, pairs: Int) {
         val model = statisticsModel()
         statisticsDao.updateStatistics(model.copy(
-            gamesFinished = model.gamesFinished!! + 1,
+            gamesFinished = model.gamesFinished?.plus(1) ?: 1,
             bestTime = (time smallestNonzero (model.bestTime?.toLongOrNull() ?: 0L)).toString(),
             minPairs = if (model.minPairs == 0 || model.minPairs!! > pairs) pairs else model.minPairs,
             maxPairs = if (model.maxPairs!! < pairs) pairs else model.maxPairs

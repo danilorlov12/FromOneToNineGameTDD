@@ -35,4 +35,8 @@ class StatisticsFragment : BaseFragment<StatisticsViewModel>() {
             }
         }
     }
+
+    override fun clear() {
+
+    }
 }

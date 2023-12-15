@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tvTitle"
         style="@style/TextViewTitle"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/congratulations_you_won"
-        android:layout_marginTop="24dp"
         android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="36dp"
         android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/congratulations_you_won" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnOk"
@@ -25,10 +23,6 @@
         android:layout_margin="48dp"
         android:background="@drawable/button_selector"
         android:text="@string/okay"
-        android:textColor="@color/primary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+        android:textColor="@color/primary" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

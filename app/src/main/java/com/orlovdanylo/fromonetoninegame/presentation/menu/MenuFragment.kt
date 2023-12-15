@@ -55,4 +55,8 @@ class MenuFragment : BaseFragment<MenuViewModel>() {
                 .getPackageInfoCompat(requireActivity().application.packageName, 0)
                 .versionName
     }
+
+    override fun clear() {
+
+    }
 }

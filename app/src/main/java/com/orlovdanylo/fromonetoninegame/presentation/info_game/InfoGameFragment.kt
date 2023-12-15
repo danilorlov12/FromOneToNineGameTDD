@@ -54,4 +54,8 @@ class InfoGameFragment : BaseFragment<InfoGameViewModel>() {
             viewModel.previousPage()
         }
     }
+
+    override fun clear() {
+
+    }
 }

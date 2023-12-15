@@ -9,7 +9,8 @@ import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
 import com.orlovdanylo.fromonetoninegame.presentation.game.models.NumberRemoval
 import com.orlovdanylo.fromonetoninegame.presentation.game.undo_redo_operations.IUndoRedoOperation
 import com.orlovdanylo.fromonetoninegame.presentation.game.undo_redo_operations.UndoRedoOperation
-import com.orlovdanylo.fromonetoninegame.utils.GameUtils
+import com.orlovdanylo.fromonetoninegame.utils.GameController
+import com.orlovdanylo.fromonetoninegame.utils.GameMode
 import kotlinx.coroutines.launch
 
 class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation() {
@@ -23,21 +24,22 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
     val selectedModel: MutableLiveData<GameModel?> = MutableLiveData()
     val pairNumbers: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
 
-    val isGameFinished: MutableLiveData<Boolean> = MutableLiveData()
+    val isGameFinished: MutableLiveData<Boolean> = MutableLiveData(false)
     val startTime: MutableLiveData<Long?> = MutableLiveData()
     val gameTime: MutableLiveData<Long> = MutableLiveData()
 
     fun initGame(isNewGame: Boolean) {
         viewModelScope.launch {
             if (isNewGame) initNewGame() else initOldGame()
-            gameModelsCount.value = gameModels.value!!.count { !it.isCrossed }
+            gameModelsCount.value = gameModels.value?.count { !it.isCrossed } ?: 0
+            updateStacks(arrayListOf(), arrayListOf())
         }
     }
 
     private suspend fun initNewGame() {
         gameRepository.deleteLastGameFromDatabase()
         statisticsRepository.increasePlayedGame()
-        gameModels.value = GameUtils.game.mapIndexed { index, s ->
+        gameModels.value = GameMode.NORMAL.numbers.mapIndexed { index, s ->
             GameModel(index, s.toInt(), false)
         }.toMutableList()
         startTime.value = 0L
@@ -59,7 +61,7 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
     }
 
     fun tap(id: Int) {
-        val gameModel = gameModels.value!!.find { it.id == id } ?: return
+        val gameModel = gameModels.value?.find { it.id == id } ?: return
 
         if (gameModel.isCrossed) return
 
@@ -77,8 +79,8 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
     }
 
     fun updateNumbers() {
-        val lastModelId = gameModels.value!!.last().id + 1
-        val restValues = gameModels.value!!.filter { !it.isCrossed }
+        val lastModelId = gameModels.value?.lastOrNull()?.id?.plus(1) ?: return
+        val restValues = gameModels.value?.filter { !it.isCrossed } ?: emptyList()
 
         gameModels.value = (gameModels.value!! + restValues.mapIndexed { index, model ->
             GameModel(index + lastModelId, model.num, false)
@@ -89,20 +91,9 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
     }
 
     private fun checkNumbers(gameModel: GameModel) {
-        if (GameUtils.checkNumbers(selectedModel.value!!.num, gameModel.num)) {
-            val (start, end) = if (selectedModel.value!!.id < gameModel.id) {
-                selectedModel.value!!.id to gameModel.id
-            } else {
-                gameModel.id to selectedModel.value!!.id
-            }
-
-            if (start == end - 1 || start == end - 9) {
-                setValuesCrossed(start, end)
-                return
-            }
-            if (GameUtils.canItBeCovered(gameModels.value!!, start, end)) {
-                setValuesCrossed(start, end)
-            }
+        val controller = GameController(gameModels.value ?: emptyList())
+        controller.determineRemovableNumberIds(selectedModel.value!!, gameModel)?.let {
+            setValuesCrossed(it.first, it.second)
         }
     }
 
@@ -145,6 +136,7 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
         viewModelScope.launch {
             if (isGameFinished.value == true) {
                 gameRepository.deleteLastGameFromDatabase()
+                isGameFinished.value = false
             } else {
                 prepareGameModelToSave()
             }
