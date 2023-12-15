@@ -25,29 +25,25 @@ class GameFragment : BaseFragment<GameViewModel>() {
     override val layoutId: Int = R.layout.fragment_game
     override val viewModel: GameViewModel by activityViewModels()
 
-    private var stopwatchScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
+    private val stopwatchScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
 
-    private val adapter: GameAdapter by lazy {
-        GameAdapter(object : ClickListener {
-            override fun click(model: GameModel) {
-                viewModel.tap(model.id)
-            }
-        })
-    }
+    private var adapter: GameAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val tvGameTime = view.findViewById<TextView>(R.id.tvGameTime)
         val tvRemovedNumbers = view.findViewById<TextView>(R.id.tvRemovedNumbers)
+        adapter = GameAdapter(object : ClickListener {
+            override fun click(model: GameModel) {
+                viewModel.tap(model.id)
+            }
+        })
 
         view.findViewById<RecyclerView>(R.id.rvDigits).apply {
             layoutManager = GridLayoutManager(context, 9)
             adapter = this@GameFragment.adapter
             itemAnimator = null
-        }
-        tvGameTime.setOnClickListener {
-            viewModel.updateNumbers()
         }
         viewModel.initGame(GameFragmentArgs.fromBundle(requireArguments()).isNewGame)
 
@@ -60,30 +56,30 @@ class GameFragment : BaseFragment<GameViewModel>() {
         }
         viewModel.gameModels.observe(viewLifecycleOwner) { models ->
             if (models.isNullOrEmpty()) return@observe
-            adapter.submitList(models)
+            adapter?.submitList(models)
         }
         viewModel.updatedPair.observe(viewLifecycleOwner) { pair ->
             if (pair != null) {
-                adapter.notifyItemChanged(pair.first)
-                adapter.notifyItemChanged(pair.second)
+                adapter?.notifyItemChanged(pair.first)
+                adapter?.notifyItemChanged(pair.second)
                 viewModel.selectedModel.value = null
             }
         }
         viewModel.selectedModel.observe(viewLifecycleOwner) { model ->
             val selectedItem = if (model != null) {
-                val item = viewModel.gameModels.value!!.first { it.id == model.id }
+                val item = viewModel.gameModels.value?.firstOrNull { it.id == model.id } ?: return@observe
                 item.isSelected = true
                 item
             } else {
-                val item = viewModel.gameModels.value!!.firstOrNull { it.isSelected } ?: return@observe
+                val item = viewModel.gameModels.value?.firstOrNull { it.isSelected } ?: return@observe
                 item.isSelected = false
                 item
             }
-            adapter.notifyItemChanged(selectedItem.id)
+            adapter?.notifyItemChanged(selectedItem.id)
         }
         viewModel.pairNumbers.observe(viewLifecycleOwner) { pair ->
             pair.toList().forEach {
-                adapter.notifyItemChanged(it)
+                adapter?.notifyItemChanged(it)
             }
         }
         viewModel.removedNumbers.observe(viewLifecycleOwner) { numbers ->
@@ -94,9 +90,10 @@ class GameFragment : BaseFragment<GameViewModel>() {
                 CustomAlertDialog(
                     context = requireContext(),
                     title = getString(R.string.congratulations_you_won),
-                    positiveButtonText = getString(R.string.okay)
-                ) { navController.navigateUp() }
-                    .create()
+                    positiveButtonText = getString(R.string.okay),
+                    onPositiveButtonClick = { navController.navigateUp() }
+                ).create()
+                stopwatchScope.coroutineContext.cancelChildren()
             }
         }
     }
@@ -121,5 +118,9 @@ class GameFragment : BaseFragment<GameViewModel>() {
         super.onPause()
         stopwatchScope.coroutineContext.cancelChildren()
         viewModel.checkCurrentGame()
+    }
+
+    override fun clear() {
+        adapter = null
     }
 }

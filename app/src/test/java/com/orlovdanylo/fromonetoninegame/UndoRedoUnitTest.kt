@@ -1,11 +1,9 @@
 package com.orlovdanylo.fromonetoninegame
 
-import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
 import com.orlovdanylo.fromonetoninegame.presentation.game.GameViewModel
-import com.orlovdanylo.fromonetoninegame.utils.GameUtils
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule

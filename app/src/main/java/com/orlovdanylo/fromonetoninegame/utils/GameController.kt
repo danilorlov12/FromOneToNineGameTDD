@@ -2,19 +2,34 @@ package com.orlovdanylo.fromonetoninegame.utils
 
 import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
 
-object GameUtils {
+class GameController(
+    private val gameModels: List<GameModel>
+) {
 
-    val game = listOf(
-        "1", "2", "3", "4", "5", "6", "7", "8", "9",
-        "1", "1", "1", "2", "1", "3", "1", "4", "1",
-        "5", "1", "6", "1", "7", "1", "8", "1", "9"
-    )
+    fun determineRemovableNumberIds(model1: GameModel, model2: GameModel): Pair<Int, Int>? {
+        if (checkNumbers(model1.num, model2.num)) {
+            val (start, end) = if (model1.id < model2.id) {
+                model1.id to model2.id
+            } else {
+                model2.id to model1.id
+            }
 
-    fun checkNumbers(firstValue: Int, secondValue: Int): Boolean {
+            if (start == end - 1 || start == end - 9) {
+                return Pair(start, end)
+            }
+
+            if (canItBeCovered(gameModels, start, end)) {
+                return Pair(start, end)
+            }
+        }
+        return null
+    }
+
+    private fun checkNumbers(firstValue: Int, secondValue: Int): Boolean {
         return firstValue + secondValue == 10 || firstValue == secondValue
     }
 
-    fun canItBeCovered(models: List<GameModel>, start: Int, end: Int): Boolean {
+    private fun canItBeCovered(models: List<GameModel>, start: Int, end: Int): Boolean {
         return canItBeCoveredByRow(models, start, end) || canItBeCoveredByColumn(models, start, end)
     }
 

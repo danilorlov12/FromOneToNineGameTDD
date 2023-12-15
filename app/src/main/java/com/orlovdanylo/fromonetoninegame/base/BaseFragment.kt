@@ -28,4 +28,11 @@ abstract class BaseFragment<VM: BaseViewModel> : Fragment() {
         super.onResume()
         (requireActivity() as MainActivity).analytics.logScreenEvent(javaClass.simpleName)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        clear()
+    }
+
+    abstract fun clear()
 }

@@ -3,7 +3,7 @@ package com.orlovdanylo.fromonetoninegame.domain.model
 import java.util.concurrent.TimeUnit
 
 class TimeModel(
-    val time: Long
+    private val time: Long
 ) {
     fun displayableTime(): String {
         val hours = TimeUnit.MILLISECONDS.toHours(time)
