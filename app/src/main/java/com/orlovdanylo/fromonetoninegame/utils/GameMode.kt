@@ -1,18 +1,29 @@
 package com.orlovdanylo.fromonetoninegame.utils
 
-enum class GameMode(val numbers: List<String>) {
-    NORMAL(
-        listOf(
+import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
+
+interface GameMode {
+    val numbers: List<String>
+
+    class NormalGameMode : GameMode {
+        override val numbers: List<String> = listOf(
             "1", "2", "3", "4", "5", "6", "7", "8", "9",
             "1", "1", "1", "2", "1", "3", "1", "4", "1",
             "5", "1", "6", "1", "7", "1", "8", "1", "9"
         )
-    ),
-    TEST(
-        listOf(
+    }
+
+    class FastWinGameMode : GameMode {
+        override val numbers: List<String> = listOf(
             "1", "1", "1", "1", "1", "1", "1", "1", "9",
             "1", "1", "1", "1", "1", "1", "1", "1", "1",
             "1", "1", "1", "1", "1", "1", "1", "1", "9"
         )
-    )
+    }
+
+    fun convertToGameModelsList(): MutableList<GameModel> {
+        return numbers.mapIndexed { index, s ->
+            GameModel(index, s.toInt(), false)
+        }.toMutableList()
+    }
 }

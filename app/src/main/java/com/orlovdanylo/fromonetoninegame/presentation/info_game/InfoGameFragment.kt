@@ -55,7 +55,5 @@ class InfoGameFragment : BaseFragment<InfoGameViewModel>() {
         }
     }
 
-    override fun clear() {
-
-    }
+    override fun clear() = Unit
 }

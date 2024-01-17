@@ -39,9 +39,7 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
     private suspend fun initNewGame() {
         gameRepository.deleteLastGameFromDatabase()
         statisticsRepository.increasePlayedGame()
-        gameModels.value = GameMode.NORMAL.numbers.mapIndexed { index, s ->
-            GameModel(index, s.toInt(), false)
-        }.toMutableList()
+        gameModels.value = GameMode.NormalGameMode().convertToGameModelsList()
         startTime.value = 0L
         removedNumbers.value = 0
     }

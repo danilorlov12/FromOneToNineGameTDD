@@ -56,7 +56,5 @@ class MenuFragment : BaseFragment<MenuViewModel>() {
                 .versionName
     }
 
-    override fun clear() {
-
-    }
+    override fun clear() = Unit
 }

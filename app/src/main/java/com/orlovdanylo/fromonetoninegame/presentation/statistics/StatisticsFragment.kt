@@ -36,7 +36,5 @@ class StatisticsFragment : BaseFragment<StatisticsViewModel>() {
         }
     }
 
-    override fun clear() {
-
-    }
+    override fun clear() = Unit
 }
