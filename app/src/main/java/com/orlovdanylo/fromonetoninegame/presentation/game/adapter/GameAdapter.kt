@@ -1,5 +1,6 @@
 package com.orlovdanylo.fromonetoninegame.presentation.game.adapter
 
+import android.animation.ObjectAnimator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,10 +9,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.orlovdanylo.fromonetoninegame.R
 import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
+import com.orlovdanylo.fromonetoninegame.utils.cancelViewAnimation
+import com.orlovdanylo.fromonetoninegame.utils.pulseAnimation
 
 class GameAdapter(
     private val clickListener: ClickListener,
 ) : ListAdapter<GameModel, RecyclerView.ViewHolder>(GameDiffCallback) {
+
+    private var firstViewObjAnimator: ObjectAnimator? = null
+    private var secondViewObjAnimator: ObjectAnimator? = null
 
     override fun getItemViewType(position: Int): Int {
         val model = getItem(position)
@@ -55,6 +61,16 @@ class GameAdapter(
         holder.itemView.setOnClickListener {
             clickListener.click(model)
         }
+    }
+
+    fun startPulseAnimation(firstView: View?, secondView: View?) {
+        firstViewObjAnimator = firstView?.pulseAnimation()
+        secondViewObjAnimator = secondView?.pulseAnimation()
+    }
+
+    fun stopPreviousAnimation(firstView: View?, secondView: View?) {
+        firstView?.cancelViewAnimation(firstViewObjAnimator)
+        secondView?.cancelViewAnimation(secondViewObjAnimator)
     }
 
     inner class NumberModelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

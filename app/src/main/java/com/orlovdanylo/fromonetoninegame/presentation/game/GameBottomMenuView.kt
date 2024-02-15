@@ -11,7 +11,13 @@ import com.orlovdanylo.fromonetoninegame.analytics.AnalyticsButton
 import com.orlovdanylo.fromonetoninegame.analytics.logEventClickListener
 import com.orlovdanylo.fromonetoninegame.presentation.MainActivity
 
+interface GameBottomMenuActions {
+    fun showTip()
+}
+
 class GameBottomMenuView : ConstraintLayout {
+
+    var actions: GameBottomMenuActions? = null
 
     private val viewModel: GameViewModel by lazy {
         ViewModelProvider(context as MainActivity)[GameViewModel::class.java]
@@ -34,6 +40,7 @@ class GameBottomMenuView : ConstraintLayout {
         val btnUndo = findViewById<AppCompatImageButton>(R.id.btnUndo)
         val btnRedo = findViewById<AppCompatImageButton>(R.id.btnRedo)
         val btnAddDigits = findViewById<AppCompatImageButton>(R.id.btnAddDigits)
+        val btnTip = findViewById<AppCompatImageButton>(R.id.btnTip)
 
         btnAddDigits.isEnabled = false
 
@@ -49,6 +56,10 @@ class GameBottomMenuView : ConstraintLayout {
             btnRedo.isEnabled = stack.isNotEmpty()
         }
 
+        viewModel.availablePairs.observe(viewLifecycleOwner) { pairs ->
+            btnTip.isEnabled = pairs.isNotEmpty()
+        }
+
         btnUndo.logEventClickListener(context, AnalyticsButton.UNDO) {
             viewModel.undo(viewModel.gameModels.value!!, viewModel.removedNumbers)
         }
@@ -59,6 +70,10 @@ class GameBottomMenuView : ConstraintLayout {
 
         btnAddDigits.logEventClickListener(context, AnalyticsButton.ADD_DIGITS) {
             viewModel.updateNumbers()
+        }
+
+        btnTip.logEventClickListener(context, AnalyticsButton.TIP) {
+            actions?.showTip()
         }
     }
 }

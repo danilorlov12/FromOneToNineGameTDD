@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.orlovdanylo.fromonetoninegame.Repositories
 import com.orlovdanylo.fromonetoninegame.base.BaseViewModel
+import com.orlovdanylo.fromonetoninegame.common.TipController
 import com.orlovdanylo.fromonetoninegame.data.game.GameModelDB
 import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
 import com.orlovdanylo.fromonetoninegame.presentation.game.models.NumberRemoval
@@ -11,6 +12,7 @@ import com.orlovdanylo.fromonetoninegame.presentation.game.undo_redo_operations.
 import com.orlovdanylo.fromonetoninegame.presentation.game.undo_redo_operations.UndoRedoOperation
 import com.orlovdanylo.fromonetoninegame.utils.GameController
 import com.orlovdanylo.fromonetoninegame.utils.GameMode
+import com.orlovdanylo.fromonetoninegame.utils.calculatePosition
 import kotlinx.coroutines.launch
 
 class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation() {
@@ -24,6 +26,9 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
     val selectedModel: MutableLiveData<GameModel?> = MutableLiveData()
     val pairNumbers: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
 
+    private var availablePairPos: Int = 0
+    val availablePairs: MutableLiveData<List<Pair<Int, Int>>> = MutableLiveData()
+
     val isGameFinished: MutableLiveData<Boolean> = MutableLiveData(false)
     val startTime: MutableLiveData<Long?> = MutableLiveData()
     val gameTime: MutableLiveData<Long> = MutableLiveData()
@@ -33,6 +38,7 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
             if (isNewGame) initNewGame() else initOldGame()
             gameModelsCount.value = gameModels.value?.count { !it.isCrossed } ?: 0
             updateStacks(arrayListOf(), arrayListOf())
+            updateAvailablePairs()
         }
     }
 
@@ -88,6 +94,7 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
         gameModelsCount.value = gameModels.value!!.count { !it.isCrossed }
 
         updateStacks(arrayListOf(), arrayListOf())
+        updateAvailablePairs()
     }
 
     private fun checkNumbers(gameModel: GameModel) {
@@ -115,6 +122,23 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
             isGameFinished.value = true
             saveFinishedGameStatistics()
         }
+        updateAvailablePairs()
+    }
+
+    fun fetchAvailablePair(): Pair<Int, Int>? {
+        val availablePairs = availablePairs.value ?: emptyList()
+        if (availablePairs.isNotEmpty()) {
+            val pair = availablePairs[availablePairPos]
+            availablePairPos = availablePairs calculatePosition availablePairPos
+            return pair
+        }
+        return null
+    }
+
+    private fun updateAvailablePairs() {
+        val controller = TipController(gameModels.value ?: emptyList())
+        availablePairs.value = controller.fetchAvailablePair()
+        availablePairPos = 0
     }
 
     private fun convertToDisplayableGame(gameDbModel: GameModelDB): MutableList<GameModel> {

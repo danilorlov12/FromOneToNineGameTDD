@@ -3,24 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
-    android:orientation="horizontal"
-    android:padding="16dp"
-    android:weightSum="3">
+    android:orientation="horizontal">
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btnUndo"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_marginEnd="64dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/button_selector"
         android:padding="12dp"
         android:scaleType="fitXY"
         android:src="@drawable/ic_undo" />
 
     <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnTip"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/button_selector"
+        android:padding="12dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_tip" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btnAddDigits"
         android:layout_width="64dp"
         android:layout_height="64dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/button_selector"
         android:padding="12dp"
         android:scaleType="fitXY"
@@ -30,10 +39,8 @@
         android:id="@+id/btnRedo"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_marginStart="64dp"
         android:background="@drawable/button_selector"
         android:padding="12dp"
         android:scaleType="fitXY"
         android:src="@drawable/ic_redo" />
-
 </LinearLayout>

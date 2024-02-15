@@ -4,12 +4,10 @@ import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
 
 interface GameCase {
     val numbers: List<String>
-    val response: TipResult
+    val response: List<Pair<Int, Int>>
 
     class Case1 : GameCase {
-        override val response: TipResult = TipResult.AvailablePairs(
-            listOf(Pair(0, 1), Pair(1, 26))
-        )
+        override val response: List<Pair<Int, Int>> = listOf(Pair(0, 1), Pair(1, 26))
 
         override val numbers: List<String> = listOf(
             "1", "1", "0", "0", "0", "0", "0", "0", "0",
@@ -19,9 +17,7 @@ interface GameCase {
     }
 
     class Case2 : GameCase {
-        override val response: TipResult = TipResult.AvailablePairs(
-            listOf(Pair(0, 18), Pair(18, 26))
-        )
+        override val response: List<Pair<Int, Int>> = listOf(Pair(0, 18), Pair(18, 26))
 
         override val numbers: List<String> = listOf(
             "1", "0", "0", "0", "0", "0", "0", "0", "0",
@@ -31,9 +27,7 @@ interface GameCase {
     }
 
     class Case3 : GameCase {
-        override val response: TipResult = TipResult.AvailablePairs(
-            listOf(Pair(0, 12))
-        )
+        override val response: List<Pair<Int, Int>> = listOf(Pair(0, 12))
 
         override val numbers: List<String> = listOf(
             "1", "0", "0", "0", "0", "0", "0", "0", "0",
@@ -43,8 +37,8 @@ interface GameCase {
     }
 
     class Case4 : GameCase {
-        override val response: TipResult = TipResult.AvailablePairs(
-            listOf(Pair(3, 21), Pair(4, 13), Pair(13, 20))
+        override val response: List<Pair<Int, Int>> = listOf(
+            Pair(3, 21), Pair(4, 13), Pair(13, 20)
         )
 
         override val numbers: List<String> = listOf(
@@ -55,7 +49,7 @@ interface GameCase {
     }
 
     class Case5 : GameCase {
-        override val response: TipResult = TipResult.NotFound
+        override val response: List<Pair<Int, Int>> = listOf()
 
         override val numbers: List<String> = listOf(
             "5", "3", "6", "5", "1", "0", "0", "7", "0",
@@ -65,9 +59,7 @@ interface GameCase {
     }
 
     class Case6 : GameCase {
-        override val response: TipResult = TipResult.AvailablePairs(
-            listOf(Pair(4, 13))
-        )
+        override val response: List<Pair<Int, Int>> = listOf(Pair(4, 13))
 
         override val numbers: List<String> = listOf(
             "5", "3", "6", "5", "1", "0", "0", "7", "0",
@@ -77,7 +69,7 @@ interface GameCase {
     }
 
     class Case7 : GameCase {
-        override val response: TipResult = TipResult.NotFound
+        override val response: List<Pair<Int, Int>> = listOf()
 
         override val numbers: List<String> = listOf(
             "1", "2", "3", "4", "5", "6", "7", "8", "9",
@@ -91,11 +83,9 @@ interface GameCase {
     }
 
     class Case8 : GameCase {
-        override val response: TipResult = TipResult.AvailablePairs(
-            listOf(
-                Pair(1, 10), Pair(11, 20), Pair(17, 26), Pair(26, 27), Pair(29, 38), Pair(36, 37),
-                Pair(37, 46), Pair(43, 61), Pair(53, 62)
-            )
+        override val response: List<Pair<Int, Int>> = listOf(
+            Pair(1, 10), Pair(11, 20), Pair(17, 26), Pair(26, 27), Pair(29, 38), Pair(36, 37),
+            Pair(37, 46), Pair(43, 61), Pair(53, 62)
         )
 
         override val numbers: List<String> = listOf(
@@ -110,13 +100,11 @@ interface GameCase {
     }
 
     class Case9 : GameCase {
-        override val response: TipResult = TipResult.AvailablePairs(
-            listOf(
-                Pair(0, 1), Pair(3, 4), Pair(12, 21), Pair(13, 31), Pair(15, 16), Pair(16, 25),
-                Pair(21, 30), Pair(24, 33), Pair(25, 34), Pair(26, 28), Pair(29, 30), Pair(31, 40),
-                Pair(32, 33), Pair(34, 35), Pair(34, 43), Pair(36, 45), Pair(37, 38), Pair(41, 50),
-                Pair(45, 46), Pair(49, 58), Pair(52, 61)
-            )
+        override val response: List<Pair<Int, Int>> = listOf(
+            Pair(0, 1), Pair(3, 4), Pair(12, 21), Pair(13, 31), Pair(15, 16), Pair(16, 25),
+            Pair(21, 30), Pair(24, 33), Pair(25, 34), Pair(26, 28), Pair(29, 30), Pair(31, 40),
+            Pair(32, 33), Pair(34, 35), Pair(34, 43), Pair(36, 45), Pair(37, 38), Pair(41, 50),
+            Pair(45, 46), Pair(49, 58), Pair(52, 61)
         )
 
         override val numbers: List<String> = listOf(
@@ -131,7 +119,7 @@ interface GameCase {
     }
 
     class Case10 : GameCase {
-        override val response: TipResult = TipResult.NotFound
+        override val response: List<Pair<Int, Int>> = listOf()
 
         override val numbers: List<String> = listOf(
             "2", "4", "2", "3", "1", "4", "0", "9", "2",
