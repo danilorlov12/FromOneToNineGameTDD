@@ -28,12 +28,15 @@ class GameFragment : BaseFragment<GameViewModel>() {
     private val stopwatchScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
 
     private var adapter: GameAdapter? = null
+    private var animatedPair: Pair<Int, Int>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val recyclerView = view.findViewById<RecyclerView>(R.id.rvDigits)
         val tvGameTime = view.findViewById<TextView>(R.id.tvGameTime)
         val tvRemovedNumbers = view.findViewById<TextView>(R.id.tvRemovedNumbers)
+
         adapter = GameAdapter(object : ClickListener {
             override fun click(model: GameModel) {
                 viewModel.tap(model.id)
@@ -95,6 +98,37 @@ class GameFragment : BaseFragment<GameViewModel>() {
                 ).create()
                 stopwatchScope.coroutineContext.cancelChildren()
             }
+        }
+        viewModel.availablePairs.observe(viewLifecycleOwner) {
+            stopPreviousAnimation(recyclerView)
+        }
+
+        view.findViewById<GameBottomMenuView>(R.id.gameBottomMenu).apply {
+            actions = object : GameBottomMenuActions {
+                override fun showTip() {
+                    viewModel.fetchAvailablePair()?.let { pair ->
+                        stopPreviousAnimation(recyclerView)
+                        startPulseAnimation(recyclerView, pair)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun startPulseAnimation(recyclerView: RecyclerView, pair: Pair<Int, Int>) {
+        adapter?.startPulseAnimation(
+            firstView = recyclerView.findViewHolderForAdapterPosition(pair.first)?.itemView,
+            secondView = recyclerView.findViewHolderForAdapterPosition(pair.second)?.itemView
+        )
+        animatedPair = pair
+    }
+
+    private fun stopPreviousAnimation(recyclerView: RecyclerView) {
+        animatedPair?.let { previousPair ->
+            adapter?.stopPreviousAnimation(
+                firstView = recyclerView.findViewHolderForAdapterPosition(previousPair.first)?.itemView,
+                secondView = recyclerView.findViewHolderForAdapterPosition(previousPair.second)?.itemView,
+            )
         }
     }
 

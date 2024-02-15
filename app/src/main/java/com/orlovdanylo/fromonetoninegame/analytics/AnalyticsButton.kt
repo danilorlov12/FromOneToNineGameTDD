@@ -9,5 +9,6 @@ enum class AnalyticsButton {
     PREVIOUS_PAGE,
     UNDO,
     REDO,
-    ADD_DIGITS
+    ADD_DIGITS,
+    TIP
 }
