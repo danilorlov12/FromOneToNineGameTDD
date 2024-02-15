@@ -5,7 +5,7 @@ import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
 interface GameMode {
     val numbers: List<String>
 
-    class NormalGameMode : GameMode {
+    class Classic : GameMode {
         override val numbers: List<String> = listOf(
             "1", "2", "3", "4", "5", "6", "7", "8", "9",
             "1", "1", "1", "2", "1", "3", "1", "4", "1",
@@ -13,7 +13,7 @@ interface GameMode {
         )
     }
 
-    class FastWinGameMode : GameMode {
+    class FastWin : GameMode {
         override val numbers: List<String> = listOf(
             "1", "1", "1", "1", "1", "1", "1", "1", "9",
             "1", "1", "1", "1", "1", "1", "1", "1", "1",

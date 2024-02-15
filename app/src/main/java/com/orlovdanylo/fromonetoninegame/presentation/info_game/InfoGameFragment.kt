@@ -27,11 +27,13 @@ class InfoGameFragment : BaseFragment<InfoGameViewModel>() {
 
         val rvDescription: RecyclerView = view.findViewById(R.id.rvDescription)
         val infoAdapter = InfoGameAdapter()
+
         rvDescription.apply {
             layoutManager = GridLayoutManager(context, 5)
             adapter = infoAdapter
             itemAnimator = null
         }
+
         viewModel.initFirstPage()
 
         viewModel.currentPage.observe(viewLifecycleOwner) { pageInfo ->
@@ -47,9 +49,11 @@ class InfoGameFragment : BaseFragment<InfoGameViewModel>() {
                 rvDescription.visibility = View.GONE
             }
         }
+
         ivNextPage.logEventClickListener(requireActivity(), AnalyticsButton.NEXT_PAGE) {
             viewModel.nextPage()
         }
+
         ivPreviousPage.logEventClickListener(requireActivity(), AnalyticsButton.PREVIOUS_PAGE) {
             viewModel.previousPage()
         }

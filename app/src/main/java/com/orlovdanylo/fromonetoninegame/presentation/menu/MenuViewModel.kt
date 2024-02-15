@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 class MenuViewModel : BaseViewModel() {
 
     private val gameRepository = Repositories.gameRepository
+
     val hasStoredGame: MutableLiveData<Boolean> = MutableLiveData(false)
 
     fun checkStoredGame() {

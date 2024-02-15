@@ -24,9 +24,7 @@ class InfoGameAdapter : ListAdapter<GameModel, InfoGameAdapter.GameModelViewHold
         with(holder) {
             tvNumber.apply {
                 text = if (!model.isCrossed) model.num.toString() else ""
-                setTextColor(
-                    ContextCompat.getColor(itemView.context, R.color.gold)
-                )
+                setTextColor(ContextCompat.getColor(itemView.context, R.color.gold))
             }
         }
     }

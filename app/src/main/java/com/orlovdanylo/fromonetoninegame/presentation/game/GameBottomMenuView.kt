@@ -4,24 +4,13 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.findViewTreeLifecycleOwner
 import com.orlovdanylo.fromonetoninegame.R
 import com.orlovdanylo.fromonetoninegame.analytics.AnalyticsButton
 import com.orlovdanylo.fromonetoninegame.analytics.logEventClickListener
-import com.orlovdanylo.fromonetoninegame.presentation.MainActivity
-
-interface GameBottomMenuActions {
-    fun showTip()
-}
 
 class GameBottomMenuView : ConstraintLayout {
 
     var actions: GameBottomMenuActions? = null
-
-    private val viewModel: GameViewModel by lazy {
-        ViewModelProvider(context as MainActivity)[GameViewModel::class.java]
-    }
 
     constructor(context: Context) : super(context)
 
@@ -35,7 +24,6 @@ class GameBottomMenuView : ConstraintLayout {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        val viewLifecycleOwner = findViewTreeLifecycleOwner()!!
 
         val btnUndo = findViewById<AppCompatImageButton>(R.id.btnUndo)
         val btnRedo = findViewById<AppCompatImageButton>(R.id.btnRedo)
@@ -44,32 +32,16 @@ class GameBottomMenuView : ConstraintLayout {
 
         btnAddDigits.isEnabled = false
 
-        viewModel.gameModelsCount.observe(viewLifecycleOwner) { count ->
-            btnAddDigits.isEnabled = count < 1000
-        }
-
-        viewModel.undoStack.observe(viewLifecycleOwner) { stack ->
-            btnUndo.isEnabled = stack.isNotEmpty()
-        }
-
-        viewModel.redoStack.observe(viewLifecycleOwner) { stack ->
-            btnRedo.isEnabled = stack.isNotEmpty()
-        }
-
-        viewModel.availablePairs.observe(viewLifecycleOwner) { pairs ->
-            btnTip.isEnabled = pairs.isNotEmpty()
-        }
-
         btnUndo.logEventClickListener(context, AnalyticsButton.UNDO) {
-            viewModel.undo(viewModel.gameModels.value!!, viewModel.removedNumbers)
+            actions?.undo()
         }
 
         btnRedo.logEventClickListener(context, AnalyticsButton.REDO) {
-            viewModel.redo(viewModel.gameModels.value!!, viewModel.removedNumbers)
+            actions?.redo()
         }
 
-        btnAddDigits.logEventClickListener(context, AnalyticsButton.ADD_DIGITS) {
-            viewModel.updateNumbers()
+        btnAddDigits.logEventClickListener(context, AnalyticsButton.UPDATE_NUMBERS) {
+            actions?.update()
         }
 
         btnTip.logEventClickListener(context, AnalyticsButton.TIP) {

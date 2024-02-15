@@ -27,8 +27,6 @@ class InfoGameViewModel : BaseViewModel() {
     }
 
     private fun findCurrentPageKey(): Int {
-        return pages.entries.firstOrNull {
-            currentPage.value == it.value
-        }?.key ?: 0
+        return pages.entries.find { currentPage.value == it.value }?.key ?: 0
     }
 }

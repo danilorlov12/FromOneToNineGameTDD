@@ -15,7 +15,7 @@ class TipController(
         val uncrossedModels = models.filter { !it.isCrossed }
         uncrossedModels.forEachIndexed { index, model ->
             visitedIds.add(model.id)
-            uncrossedModels.subList(index + 1, uncrossedModels.size).filter { it.id !in visitedIds }.firstOrNull { secondModel ->
+            uncrossedModels.subList(index + 1, uncrossedModels.size).filter { it.id !in visitedIds }.find { secondModel ->
                 gameController.determineRemovableNumberIds(model, secondModel)?.let {
                     pairs.add(Pair(it.first, it.second))
                 }

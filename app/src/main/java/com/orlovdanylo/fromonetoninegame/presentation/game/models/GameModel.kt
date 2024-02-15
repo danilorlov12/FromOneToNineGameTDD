@@ -2,7 +2,7 @@ package com.orlovdanylo.fromonetoninegame.presentation.game.models
 
 data class GameModel(
     val id: Int,
-    var num: Int,
+    val num: Int,
     val isCrossed: Boolean,
     var isSelected: Boolean = false
 ) {

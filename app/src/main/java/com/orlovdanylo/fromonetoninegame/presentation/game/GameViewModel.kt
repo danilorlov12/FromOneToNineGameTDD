@@ -45,7 +45,7 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
     private suspend fun initNewGame() {
         gameRepository.deleteLastGameFromDatabase()
         statisticsRepository.increasePlayedGame()
-        gameModels.value = GameMode.NormalGameMode().convertToGameModelsList()
+        gameModels.value = GameMode.Classic().convertToGameModelsList()
         startTime.value = 0L
         removedNumbers.value = 0
     }
@@ -98,11 +98,11 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
     private fun checkNumbers(gameModel: GameModel) {
         val controller = GameController(gameModels.value ?: emptyList())
         controller.determineRemovableNumberIds(selectedModel.value!!, gameModel)?.let {
-            setValuesCrossed(it.first, it.second)
+            removeGameModels(it.first, it.second)
         }
     }
 
-    private fun setValuesCrossed(start: Int, end: Int) {
+    private fun removeGameModels(start: Int, end: Int) {
         val startModel = gameModels.value!![start]
         val endModel = gameModels.value!![end]
 
@@ -133,7 +133,7 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
         return null
     }
 
-    private fun updateAvailablePairs() {
+    fun updateAvailablePairs() {
         val controller = TipController(gameModels.value ?: emptyList())
         availablePairs.value = controller.fetchAvailablePair()
         availablePairPos = 0

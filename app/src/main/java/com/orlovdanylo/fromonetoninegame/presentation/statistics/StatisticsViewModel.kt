@@ -1,6 +1,5 @@
 package com.orlovdanylo.fromonetoninegame.presentation.statistics
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.orlovdanylo.fromonetoninegame.Repositories

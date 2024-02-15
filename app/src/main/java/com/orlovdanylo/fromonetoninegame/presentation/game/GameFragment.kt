@@ -3,6 +3,7 @@ package com.orlovdanylo.fromonetoninegame.presentation.game
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,7 @@ import com.orlovdanylo.fromonetoninegame.R
 import com.orlovdanylo.fromonetoninegame.base.BaseFragment
 import com.orlovdanylo.fromonetoninegame.domain.model.TimeModel
 import com.orlovdanylo.fromonetoninegame.presentation.alert_dialog.CustomAlertDialog
-import com.orlovdanylo.fromonetoninegame.presentation.game.adapter.ClickListener
+import com.orlovdanylo.fromonetoninegame.presentation.core.ClickListener
 import com.orlovdanylo.fromonetoninegame.presentation.game.adapter.GameAdapter
 import com.orlovdanylo.fromonetoninegame.presentation.game.models.GameModel
 import kotlinx.coroutines.CoroutineScope
@@ -37,7 +38,7 @@ class GameFragment : BaseFragment<GameViewModel>() {
         val tvGameTime = view.findViewById<TextView>(R.id.tvGameTime)
         val tvRemovedNumbers = view.findViewById<TextView>(R.id.tvRemovedNumbers)
 
-        adapter = GameAdapter(object : ClickListener {
+        adapter = GameAdapter(object : ClickListener<GameModel> {
             override fun click(model: GameModel) {
                 viewModel.tap(model.id)
             }
@@ -48,46 +49,51 @@ class GameFragment : BaseFragment<GameViewModel>() {
             adapter = this@GameFragment.adapter
             itemAnimator = null
         }
+
         viewModel.initGame(GameFragmentArgs.fromBundle(requireArguments()).isNewGame)
 
         viewModel.startTime.observe(viewLifecycleOwner) { time: Long? ->
             if (time != null) startStopwatch(time)
         }
+
         viewModel.gameTime.observe(viewLifecycleOwner) { time ->
             val timeModel = TimeModel(time)
             tvGameTime.text = timeModel.displayableTime()
         }
+
         viewModel.gameModels.observe(viewLifecycleOwner) { models ->
             if (models.isNullOrEmpty()) return@observe
             adapter?.submitList(models)
         }
+
         viewModel.updatedPair.observe(viewLifecycleOwner) { pair ->
             if (pair != null) {
-                adapter?.notifyItemChanged(pair.first)
-                adapter?.notifyItemChanged(pair.second)
+                adapter?.notifyPairItemsChanged(pair.first, pair.second)
                 viewModel.selectedModel.value = null
             }
         }
+
         viewModel.selectedModel.observe(viewLifecycleOwner) { model ->
             val selectedItem = if (model != null) {
-                val item = viewModel.gameModels.value?.firstOrNull { it.id == model.id } ?: return@observe
-                item.isSelected = true
-                item
+                val item = viewModel.gameModels.value?.find { it.id == model.id } ?: return@observe
+                item.also { it.isSelected = true }
             } else {
-                val item = viewModel.gameModels.value?.firstOrNull { it.isSelected } ?: return@observe
-                item.isSelected = false
-                item
+                val item = viewModel.gameModels.value?.find { it.isSelected } ?: return@observe
+                item.also { it.isSelected = false }
             }
             adapter?.notifyItemChanged(selectedItem.id)
         }
+
         viewModel.pairNumbers.observe(viewLifecycleOwner) { pair ->
             pair.toList().forEach {
                 adapter?.notifyItemChanged(it)
             }
         }
+
         viewModel.removedNumbers.observe(viewLifecycleOwner) { numbers ->
             tvRemovedNumbers.text = numbers.toString()
         }
+
         viewModel.isGameFinished.observe(viewLifecycleOwner) { isGameFinished ->
             if (isGameFinished) {
                 CustomAlertDialog(
@@ -99,12 +105,36 @@ class GameFragment : BaseFragment<GameViewModel>() {
                 stopwatchScope.coroutineContext.cancelChildren()
             }
         }
+
         viewModel.availablePairs.observe(viewLifecycleOwner) {
             stopPreviousAnimation(recyclerView)
         }
 
+        initBottomView(view, recyclerView)
+    }
+
+    private fun initBottomView(view: View, recyclerView: RecyclerView) {
+        val btnUndo = view.findViewById<AppCompatImageButton>(R.id.btnUndo)
+        val btnRedo = view.findViewById<AppCompatImageButton>(R.id.btnRedo)
+        val btnAddDigits = view.findViewById<AppCompatImageButton>(R.id.btnAddDigits)
+        val btnTip = view.findViewById<AppCompatImageButton>(R.id.btnTip)
+
         view.findViewById<GameBottomMenuView>(R.id.gameBottomMenu).apply {
             actions = object : GameBottomMenuActions {
+                override fun undo() {
+                    viewModel.undo(viewModel.gameModels.value!!, viewModel.removedNumbers)
+                    viewModel.updateAvailablePairs()
+                }
+
+                override fun redo() {
+                    viewModel.redo(viewModel.gameModels.value!!, viewModel.removedNumbers)
+                    viewModel.updateAvailablePairs()
+                }
+
+                override fun update() {
+                    viewModel.updateNumbers()
+                }
+
                 override fun showTip() {
                     viewModel.fetchAvailablePair()?.let { pair ->
                         stopPreviousAnimation(recyclerView)
@@ -112,6 +142,22 @@ class GameFragment : BaseFragment<GameViewModel>() {
                     }
                 }
             }
+        }
+
+        viewModel.gameModelsCount.observe(viewLifecycleOwner) { count ->
+            btnAddDigits.isEnabled = count < 1000
+        }
+
+        viewModel.undoStack.observe(viewLifecycleOwner) { stack ->
+            btnUndo.isEnabled = stack.isNotEmpty()
+        }
+
+        viewModel.redoStack.observe(viewLifecycleOwner) { stack ->
+            btnRedo.isEnabled = stack.isNotEmpty()
+        }
+
+        viewModel.availablePairs.observe(viewLifecycleOwner) { pairs ->
+            btnTip.isEnabled = pairs.isNotEmpty()
         }
     }
 
