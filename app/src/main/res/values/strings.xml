@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">FromOneToNine</string>
+    <string name="app_name" translatable="false">From 1 To 9</string>
 
     <string name="new_game">New game</string>
     <string name="continue_game">Continue</string>
