@@ -14,4 +14,5 @@
         android:fitsSystemWindows="true"
         app:defaultNavHost="true"
         app:navGraph="@navigation/main_navigation" />
+
 </FrameLayout>

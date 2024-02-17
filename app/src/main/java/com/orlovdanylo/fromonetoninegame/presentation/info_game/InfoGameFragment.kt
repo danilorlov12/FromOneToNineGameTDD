@@ -2,8 +2,8 @@ package com.orlovdanylo.fromonetoninegame.presentation.info_game
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,13 +22,12 @@ class InfoGameFragment : BaseFragment<InfoGameViewModel>() {
         super.onViewCreated(view, savedInstanceState)
 
         val tvDescription: TextView = view.findViewById(R.id.tvDescription)
-        val ivNextPage: ImageView = view.findViewById(R.id.ivNext)
-        val ivPreviousPage: ImageView = view.findViewById(R.id.ivPrevious)
+        val ivNextPage: AppCompatButton = view.findViewById(R.id.btnNext)
+        val ivPreviousPage: AppCompatButton = view.findViewById(R.id.btnBack)
 
-        val rvDescription: RecyclerView = view.findViewById(R.id.rvDescription)
         val infoAdapter = InfoGameAdapter()
 
-        rvDescription.apply {
+        val rvDescription = view.findViewById<RecyclerView>(R.id.rvDescription).apply {
             layoutManager = GridLayoutManager(context, 5)
             adapter = infoAdapter
             itemAnimator = null
