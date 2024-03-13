@@ -180,7 +180,7 @@ class GameFragment : BaseFragment<GameViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.initGameTime(GameFragmentArgs.fromBundle(requireArguments()).isNewGame)
+        viewModel.initializeGameTime(GameFragmentArgs.fromBundle(requireArguments()).isNewGame)
     }
 
     private fun startStopwatch(time: Long) {
