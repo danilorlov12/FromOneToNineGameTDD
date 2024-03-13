@@ -35,32 +35,35 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
 
     fun initGame(isNewGame: Boolean) {
         viewModelScope.launch {
-            if (isNewGame) initNewGame() else initOldGame()
+            if (isNewGame) initializeNewGame() else initializeOldGame()
+
             gameModelsCount.value = gameModels.value?.count { !it.isCrossed } ?: 0
             updateStacks(arrayListOf(), arrayListOf())
             updateAvailablePairs()
         }
     }
 
-    private suspend fun initNewGame() {
+    private suspend fun initializeNewGame() {
         gameRepository.deleteLastGameFromDatabase()
         statisticsRepository.increasePlayedGame()
         gameModels.value = GameMode.Classic().convertToGameModelsList()
-        startTime.value = 0L
         removedNumbers.value = 0
     }
 
-    private suspend fun initOldGame() {
+    private suspend fun initializeOldGame() {
         val storedGame = gameRepository.getLastGameFromDatabase()
         removedNumbers.value = storedGame?.pairCrossed ?: 0
-        startTime.value = storedGame?.time ?: 0L
         gameModels.value = convertToDisplayableGame(storedGame!!)
     }
 
-    fun initGameTime() {
-        viewModelScope.launch {
-            val storedGame = gameRepository.getLastGameFromDatabase()
-            startTime.value = storedGame?.time ?: 0L
+    fun initializeGameTime(isNewGame: Boolean) {
+        if (isNewGame) {
+            startTime.value = 0L
+        } else {
+            viewModelScope.launch {
+                val storedGame = gameRepository.getLastGameFromDatabase()
+                startTime.value = storedGame?.time ?: 0L
+            }
         }
     }
 
@@ -89,6 +92,7 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
         gameModels.value = (gameModels.value!! + restValues.mapIndexed { index, model ->
             GameModel(index + lastModelId, model.num, false)
         }).toMutableList()
+
         gameModelsCount.value = gameModels.value!!.count { !it.isCrossed }
 
         updateStacks(arrayListOf(), arrayListOf())
@@ -160,13 +164,13 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
                 gameRepository.deleteLastGameFromDatabase()
                 isGameFinished.value = false
             } else {
-                prepareGameModelToSave()
+                prepareStoredGameModel()
             }
             startTime.value = null
         }
     }
 
-    private suspend fun prepareGameModelToSave() {
+    private suspend fun prepareStoredGameModel() {
         val gameDbModel = GameModelDB(
             id = 0,
             gameDigits = gameModels.value?.joinToString("") {
