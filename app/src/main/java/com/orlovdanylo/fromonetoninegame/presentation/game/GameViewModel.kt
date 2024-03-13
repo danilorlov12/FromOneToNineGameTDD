@@ -46,21 +46,23 @@ class GameViewModel : BaseViewModel(), IUndoRedoOperation by UndoRedoOperation()
         gameRepository.deleteLastGameFromDatabase()
         statisticsRepository.increasePlayedGame()
         gameModels.value = GameMode.Classic().convertToGameModelsList()
-        startTime.value = 0L
         removedNumbers.value = 0
     }
 
     private suspend fun initOldGame() {
         val storedGame = gameRepository.getLastGameFromDatabase()
         removedNumbers.value = storedGame?.pairCrossed ?: 0
-        startTime.value = storedGame?.time ?: 0L
         gameModels.value = convertToDisplayableGame(storedGame!!)
     }
 
-    fun initGameTime() {
-        viewModelScope.launch {
-            val storedGame = gameRepository.getLastGameFromDatabase()
-            startTime.value = storedGame?.time ?: 0L
+    fun initGameTime(isNewGame: Boolean) {
+        if (isNewGame) {
+            startTime.value = 0L
+        } else {
+            viewModelScope.launch {
+                val storedGame = gameRepository.getLastGameFromDatabase()
+                startTime.value = storedGame?.time ?: 0L
+            }
         }
     }
 
