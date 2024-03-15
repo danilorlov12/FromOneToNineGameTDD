@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.activityViewModels
 import com.orlovdanylo.fromonetoninegame.R
 import com.orlovdanylo.fromonetoninegame.analytics.AnalyticsButton
@@ -54,6 +55,11 @@ class MenuFragment : BaseFragment<MenuViewModel>() {
             requireActivity().application.packageManager
                 .getPackageInfoCompat(requireActivity().application.packageName, 0)
                 .versionName
+
+        view.findViewById<AppCompatImageView>(R.id.ivHeader).setOnClickListener {
+            val action = MenuFragmentDirections.actionMenuFragmentToSmsCodeFragment()
+            navController.navigate(action)
+        }
     }
 
     override fun clear() = Unit
