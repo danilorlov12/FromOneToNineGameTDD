@@ -43,8 +43,10 @@ class InfoGameFragment : BaseFragment<InfoGameViewModel>() {
             tvDescription.text = getString(pageInfo.descriptionResId)
             if (pageInfo.listOfModels.isNotEmpty()) {
                 infoAdapter.submitList(pageInfo.listOfModels)
+                tvDescription.minLines = 4
                 rvDescription.visibility = View.VISIBLE
             } else {
+                tvDescription.minLines = 0
                 rvDescription.visibility = View.GONE
             }
         }
